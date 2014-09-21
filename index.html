@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>React Example</title>
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+	<script src="bower_components/axios/dist/axios.js"></script>
+	<script src="bower_components/moment/moment.js"></script>
+	<script src="bower_components/react/react-with-addons.js"></script>
+	<script src="bower_components/react/JSXTransformer.js"></script>
+	<script src="bower_components/react-router/dist/react-router.js"></script>
+
+	<script type="text/jsx">
+		/** @jsx React.DOM */
+
+		var GITHUB_API_URL = 'https://api.github.com';
+
+		var UserDetail = React.createClass({
+			getDefaultProps: function () {
+				return {
+					user: null
+				};
+			},
+
+			getInitialState: function () {
+				return {
+					user: {},
+					orgs: []
+				};
+			},
+
+			getUser: function (props) {
+				props = props || this.props;
+				axios.all([
+						axios.get(GITHUB_API_URL + '/users/' + props.user),
+						axios.get(GITHUB_API_URL + '/users/' + props.user + '/orgs')
+					])
+					.then(axios.spread(function (user, orgs) {
+						this.setState({
+							user: user.data,
+							orgs: orgs.data
+						});
+					}.bind(this)));
+			},
+
+			componentWillMount: function () {
+				this.getUser();
+			},
+
+			componentWillReceiveProps: function (props) {
+				this.getUser(props);
+			},
+
+			render: function () {
+				var orgs = this.state.orgs.map(function (org) {
+					return <img src={org.avatar_url} className="avatar"/>;
+				});
+
+				var stats = [
+					{field: 'followers', label: 'followers'},
+					{field: 'public_repos', label: 'repositories'},
+					{field: 'following', label: 'following'}
+				].map(function (stat) {
+					return (
+						<span>
+							<h2>{this.state.user[stat.field]}</h2>
+							<small>{stat.label}</small>
+						</span>
+					);
+				}.bind(this));
+
+				return (
+					<div>
+						<section className="user border-bottom">
+							<img src={this.state.user.avatar_url} className="avatar"/>
+							<h2>{this.state.user.name}</h2>
+							<h5>{this.state.user.login}</h5>
+						</section>
+						<section className="stats border-bottom">
+							{stats}
+						</section>
+						<section className="orgs">
+							<h4>Organizations</h4>
+							{orgs}
+						</section>
+					</div>
+				);
+			}
+		});
+
+		var RepoList = React.createClass({
+			getDefaultProps: function () {
+				return {
+					user: null,
+					filter: null
+				};
+			},
+
+			getInitialState: function () {
+				return {
+					repos: []
+				};
+			},
+
+			getRepos: function (props) {
+				props = props || this.props;
+				axios.get(GITHUB_API_URL + '/users/' + props.user + '/repos?per_page=250')
+					.then(function (repos) {
+						this.setState({
+							repos: repos.data
+						});
+					}.bind(this));
+			},
+
+			componentWillMount: function () {
+				this.getRepos();
+			},
+
+			componentWillReceiveProps: function (props) {
+				this.getRepos(props);
+			},
+
+			render: function () {
+				var filter = this.props.filter ? this.props.filter.toLowerCase() : null;
+				var repos = this.state.repos
+					.filter(function (repo) {
+						return !filter ||
+									(repo.name && repo.name.toLowerCase().indexOf(filter) > -1) ||
+									(repo.description && repo.description.toLowerCase().indexOf(filter) > -1);
+					})
+					.sort(function (a, b) {
+						return Date.parse(b.pushed_at) - Date.parse(a.pushed_at);
+					})
+					.map(function (repo) {
+						var updated = moment(repo.pushed_at).fromNow();
+						return (
+							<li className="border-bottom">
+								<div className="pull-right">
+									<strong>{repo.language}</strong>
+									<strong>&#9734; {repo.stargazers_count}</strong>
+									<strong>&#4292; {repo.forks_count}</strong>
+								</div>
+								<h4>{repo.name}</h4>
+								<p>{repo.description}</p>
+								<time>Updated {updated}</time>
+							</li>
+						);
+					});
+
+				return (
+					<ul className="list-unstyled">{repos}</ul>
+				);
+			}
+		});
+
+		var RepoFilter = React.createClass({
+			getDefaultProps: function () {
+				return {
+					onKeyUp: function () {}
+				};
+			},
+
+			handleKeyUp: function () {
+				this.props.onKeyUp(this.refs.input.getDOMNode().value);
+			},
+
+			render: function () {
+				return (
+					<section className="border-bottom">
+						<input type="text"
+									placeholder="Filter repositories..."
+									className="form-control"
+									ref="input"
+									onKeyUp={this.handleKeyUp}/>
+					</section>
+				);
+			}
+		});
+
+		var App = React.createClass({
+			getInitialState: function () {
+				return {
+					filter: null
+				};
+			},
+
+			handleKeyUp: function (filter) {
+				this.setState({
+					filter: filter
+				});
+			},
+
+			render: function () {
+				return (
+					<div className="container">
+						<div className="col-md-3 pull-left">
+							<UserDetail user={this.props.params.user}/>
+						</div>
+						<div className="col-md-8 col-sm-7 pull-left">
+							<h3>Repositories</h3>
+							<RepoFilter onKeyUp={this.handleKeyUp}/>
+							<RepoList user={this.props.params.user} filter={this.state.filter}/>
+						</div>
+					</div>
+				);
+			}
+		});
+
+		var Home = React.createClass({
+			handleSubmit: function (e) {
+				e.preventDefault();
+				document.location.hash = this.refs.input.getDOMNode().value;
+			},
+
+			render: function () {
+				return (
+					<section className="container home">
+						<form className="form-inline" role="form" onSubmit={this.handleSubmit}>
+							<div className="form-group">
+						    <div className="input-group">
+						      <input type="text"
+													placeholder="Enter a GitHub user..."
+													className="form-control"
+													ref="input"/>
+						    </div>
+						  </div>
+							<button type="button"
+											className="btn btn-primary"
+											onClick={this.handleSubmit}>Go</button>
+						</form>
+					</section>
+				);
+			}
+		});
+
+		var Routes = ReactRouter.Routes;
+		var Route = ReactRouter.Route;
+		var Router = (
+			<Routes>
+				<Route name="home" path="/" handler={Home}/>
+				<Route name="user" path="/:user" handler={App}/>
+			</Routes>
+		);
+
+		React.renderComponent(Router, document.body);
+	</script>
+</body>
+</html>
