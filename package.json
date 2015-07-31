@@ -23,7 +23,7 @@
     "bootstrap": "^3.3.4",
     "moment": "^2.10.3",
     "react": "^0.13.3",
-    "react": "^0.13.3"
+    "react-router": "^0.13.3"
   },
   "devDependencies": {
     "babel-core": "^5.5.6",
