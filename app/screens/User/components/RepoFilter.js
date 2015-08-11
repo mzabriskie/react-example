@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 export default React.createClass({
   propTypes: {
-    onKeyUp: React.PropTypes.func
+    onKeyUp: PropTypes.func
   },
 
   getDefaultProps() {
@@ -11,7 +11,7 @@ export default React.createClass({
     };
   },
 
-  handleKeyUp() {
+  handleInputKeyUp() {
     this.props.onKeyUp(this.refs.input.getDOMNode().value);
   },
 
@@ -22,7 +22,7 @@ export default React.createClass({
               placeholder="Filter repositories..."
               className="form-control"
               ref="input"
-              onKeyUp={this.handleKeyUp}/>
+              onKeyUp={this.handleInputKeyUp}/>
       </section>
     );
   }

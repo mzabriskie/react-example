@@ -1,11 +1,10 @@
 import React from 'react';
-import Router from 'react-router';
+import Router, { Route } from 'react-router';
 import Home from './app/screens/Home';
 import User from './app/screens/User';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/styles.css';
 
-var { Route } = Router;
 var routes = (
   <Route>
     <Route name="home" path="/" handler={Home}/>
@@ -16,4 +15,3 @@ var routes = (
 Router.run(routes, function (Handler) {
   React.render(<Handler/>, document.getElementById('container'));
 });
-

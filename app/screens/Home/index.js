@@ -6,7 +6,7 @@ export default React.createClass({
 
   handleSubmit(e) {
     e.preventDefault();
-    this.transitionTo('/' + this.refs.input.getDOMNode().value);
+    this.transitionTo(`/${this.refs.input.getDOMNode().value}`);
   },
 
   render() {

@@ -1,16 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import axios from 'axios';
-
-const GITHUB_API_URL = 'https://api.github.com';
-const STAT_FIELDS = [
-  {field: 'followers', label: 'followers'},
-  {field: 'public_repos', label: 'repositories'},
-  {field: 'following', label: 'following'}
-];
+import ProfileStat from './ProfileStat';
 
 export default React.createClass({
   propTypes: {
-    user: React.PropTypes.string
+    user: PropTypes.string
   },
 
   getDefaultProps() {
@@ -29,8 +23,8 @@ export default React.createClass({
   getUser(props) {
     props = props || this.props;
     axios.all([
-        axios.get(GITHUB_API_URL + '/users/' + props.user),
-        axios.get(GITHUB_API_URL + '/users/' + props.user + '/orgs')
+        axios.get(`https://api.github.com/users/${props.user}`),
+        axios.get(`https://api.github.com/users/${props.user}/orgs`)
       ])
       .then(axios.spread((user, orgs) => {
         this.setState({
@@ -48,33 +42,32 @@ export default React.createClass({
     this.getUser(props);
   },
 
-  renderStats() {
-    return STAT_FIELDS.map((stat) => {
+  renderOrgs() {
+    return this.state.orgs.map((org) => {
       return (
-        <span key={stat.field}>
-          <h2>{this.state.user[stat.field]}</h2>
-          <small>{stat.label}</small>
-        </span>
+        <img
+          key={org.avatar_url}
+          src={org.avatar_url}
+          title={org.login}
+          className="avatar"
+        />
       );
     });
   },
 
-  renderOrgs() {
-    return this.state.orgs.map((org) => {
-      return <img key={org.avatar_url} src={org.avatar_url} className="avatar" title={org.login}/>;
-    });
-  },
-
-  render() {  
+  render() {
+    let user = this.state.user;
     return (
       <div>
         <section className="user border-bottom">
-          <img src={this.state.user.avatar_url} className="avatar"/>
-          <h2>{this.state.user.name}</h2>
-          <h5>{this.state.user.login}</h5>
+          <img src={user.avatar_url} className="avatar"/>
+          <h2>{user.name}</h2>
+          <h5>{user.login}</h5>
         </section>
         <section className="stats border-bottom">
-          {this.renderStats()}
+          <ProfileStat value={user.followers} label="followers"/>
+          <ProfileStat value={user.public_repos} label="repositories"/>
+          <ProfileStat value={user.following} label="following"/>
         </section>
         <section className="orgs">
           <h4>Organizations</h4>
