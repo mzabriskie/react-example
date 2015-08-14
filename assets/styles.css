@@ -34,12 +34,6 @@ section.home button {
 	border-bottom-left-radius: 0;
 }
 
-section.user .avatar {
-	border-radius: 5px;
-	width: 230px;
-	height: 230px;
-}
-
 section.stats {
 	text-align: center;
 }

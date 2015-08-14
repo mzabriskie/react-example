@@ -60,7 +60,7 @@ export default React.createClass({
     return (
       <div>
         <section className="user border-bottom">
-          <img src={user.avatar_url} className="avatar"/>
+          <img src={user.avatar_url} className="img-rounded img-responsive"/>
           <h2>{user.name}</h2>
           <h5>{user.login}</h5>
         </section>
