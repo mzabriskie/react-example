@@ -49,7 +49,6 @@ export default React.createClass({
           key={org.avatar_url}
           src={org.avatar_url}
           title={org.login}
-          className="avatar"
         />
       );
     });
