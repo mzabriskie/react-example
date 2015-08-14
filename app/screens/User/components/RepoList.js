@@ -44,8 +44,8 @@ export default React.createClass({
     return this.state.repos
       .filter((repo) => {
         return !filter ||
-          (repo.name && repo.name.toLowerCase().indexOf(filter) > -1) ||
-          (repo.description && repo.description.toLowerCase().indexOf(filter) > -1);
+          (repo.name && repo.name.toLowerCase().includes(filter)) ||
+          (repo.description && repo.description.toLowerCase().includes(filter));
       })
       .sort((a, b) => {
         return Date.parse(b.pushed_at) - Date.parse(a.pushed_at);
