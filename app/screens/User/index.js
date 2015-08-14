@@ -24,13 +24,15 @@ export default React.createClass({
     let user = this.context.router.getCurrentParams().user;
     return (
       <div className="container">
-        <div className="col-md-3 pull-left">
-          <Profile user={user}/>
-        </div>
-        <div className="col-md-8 col-sm-7 pull-left">
-          <h3>Repositories</h3>
-          <RepoFilter onKeyUp={this.handleFilterKeyUp}/>
-          <RepoList user={user} filter={this.state.filter}/>
+        <div className="row">
+          <div className="col-sm-3">
+            <Profile user={user}/>
+          </div>
+          <div className="col-sm-9">
+            <h3>Repositories</h3>
+            <RepoFilter onKeyUp={this.handleFilterKeyUp}/>
+            <RepoList user={user} filter={this.state.filter}/>
+          </div>
         </div>
       </div>
     );
