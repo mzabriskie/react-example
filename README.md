@@ -8,7 +8,7 @@ To run the app locally:
 git clone git@github.com:mzabriskie/react-example.git
 cd react-example
 npm install
-npm run dev
+npm start
 open http://127.0.0.1:8080
 ```
 
