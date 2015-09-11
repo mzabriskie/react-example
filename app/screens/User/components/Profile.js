@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import Tooltip from 'react-tooltip';
 import axios from 'axios';
 import ProfileStat from './ProfileStat';
 
@@ -48,7 +49,7 @@ export default React.createClass({
         <img
           key={org.avatar_url}
           src={org.avatar_url}
-          title={org.login}
+          data-tip={org.login}
         />
       );
     });
@@ -72,6 +73,7 @@ export default React.createClass({
           <h4>Organizations</h4>
           {this.renderOrgs()}
         </section>
+        <Tooltip effect="solid"/>
       </div>
     );
   }
