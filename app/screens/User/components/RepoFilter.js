@@ -12,7 +12,7 @@ export default React.createClass({
   },
 
   handleInputKeyUp() {
-    this.props.onKeyUp(this.refs.input.getDOMNode().value);
+    this.props.onKeyUp(this.refs.input.value);
   },
 
   render() {

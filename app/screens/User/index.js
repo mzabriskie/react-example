@@ -1,13 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Profile from './components/Profile';
 import RepoFilter from './components/RepoFilter';
 import RepoList from './components/RepoList';
 
 export default React.createClass({
-  contextTypes: {
-    router: PropTypes.func
-  },
-
   getInitialState() {
     return {
       filter: null
@@ -21,7 +17,7 @@ export default React.createClass({
   },
 
   render() {
-    let user = this.context.router.getCurrentParams().user;
+    let { user } = this.props.params;
     return (
       <div className="container">
         <div className="row">

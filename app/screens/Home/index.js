@@ -1,12 +1,12 @@
 import React from 'react';
-import { Navigation } from 'react-router';
+import { History } from 'react-router';
 
 export default React.createClass({
-  mixins: [ Navigation ],
+  mixins: [ History ],
 
   handleSubmit(e) {
     e.preventDefault();
-    this.transitionTo(`/${this.refs.input.getDOMNode().value}`);
+    this.history.pushState(null, `/${this.refs.input.value}`);
   },
 
   render() {

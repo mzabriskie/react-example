@@ -47,14 +47,8 @@ export default React.createClass({
           (repo.name && repo.name.toLowerCase().includes(filter)) ||
           (repo.description && repo.description.toLowerCase().includes(filter));
       })
-      .sort((a, b) => {
-        return Date.parse(b.pushed_at) - Date.parse(a.pushed_at);
-      })
-      .map((repo) => {
-        return (
-          <RepoListItem key={repo.id} repo={repo}/>
-        );
-      });
+      .sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at))
+      .map((repo) => <RepoListItem key={repo.id} repo={repo}/>);
   },
 
   render() {
