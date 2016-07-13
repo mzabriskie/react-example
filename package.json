@@ -4,7 +4,10 @@
   "description": "Simple React example app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:base": "mocha app/**/*.test.js --require ./test/helpers/setup.js",
+    "test": "npm run test:base -- --compilers js:babel-register",
+    "watch:test": "npm test -- -w",
+    "cover": "cross-env NODE_ENV=test nyc npm run test:base",
     "build": "webpack --env.production",
     "start": "webpack-dev-server --inline --content-base ./ --env.dev"
   },
@@ -31,14 +34,40 @@
   "devDependencies": {
     "babel-core": "6.10.4",
     "babel-loader": "6.2.4",
+    "babel-plugin-istanbul": "1.0.3",
     "babel-preset-es2015": "6.9.0",
     "babel-preset-react": "6.11.1",
     "babel-preset-stage-2": "6.11.0",
+    "babel-register": "6.9.0",
+    "chai": "3.5.0",
+    "chai-enzyme": "0.5.0",
+    "cross-env": "1.0.8",
     "css-loader": "0.23.1",
+    "enzyme": "2.4.1",
     "file-loader": "0.9.0",
+    "mocha": "2.5.3",
+    "nyc": "7.0.0",
+    "react-addons-test-utils": "15.2.1",
     "style-loader": "^0.13.0",
     "webpack": "2.1.0-beta.15",
     "webpack-dev-server": "2.1.0-beta.0",
     "webpack-validator": "2.2.2"
+  },
+  "nyc": {
+    "all": true,
+    "check-coverage": true,
+    "branches": 100,
+    "function": 100,
+    "lines": 100,
+    "statements": 100,
+    "reporter": [
+      "text",
+      "lcov"
+    ],
+    "sourceMap": false,
+    "instrument": false,
+    "require": [
+      "babel-register"
+    ]
   }
 }
