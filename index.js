@@ -5,7 +5,7 @@ import { createHashHistory } from 'history'
 import Home from './app/screens/Home';
 import User from './app/screens/User';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'react-tooltip/dist/react-tooltip.min.css';
+import 'react-tooltip';
 import './assets/styles.css';
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })

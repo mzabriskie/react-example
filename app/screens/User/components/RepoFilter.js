@@ -12,17 +12,19 @@ export default React.createClass({
   },
 
   handleInputKeyUp() {
-    this.props.onKeyUp(this.refs.input.value);
+    this.props.onKeyUp(this._input.value);
   },
 
   render() {
     return (
       <section className="border-bottom">
-        <input type="text"
-              placeholder="Filter repositories..."
-              className="form-control"
-              ref="input"
-              onKeyUp={this.handleInputKeyUp}/>
+        <input
+          type="text"
+          placeholder="Filter repositories..."
+          className="form-control"
+          ref={ref => this._input = ref}
+          onKeyUp={this.handleInputKeyUp}
+        />
       </section>
     );
   }
