@@ -11,8 +11,8 @@ export default React.createClass({
     };
   },
 
-  handleInputKeyUp() {
-    this.props.onKeyUp(this._input.value);
+  handleInputKeyUp({target: {value}}) {
+    this.props.onKeyUp(value);
   },
 
   render() {
@@ -22,7 +22,6 @@ export default React.createClass({
           type="text"
           placeholder="Filter repositories..."
           className="form-control"
-          ref={ref => this._input = ref}
           onKeyUp={this.handleInputKeyUp}
         />
       </section>

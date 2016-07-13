@@ -12,7 +12,8 @@ module.exports = env => {
     context: __dirname,
     output: {
       path: resolve(__dirname, './build'),
-      filename: 'bundle.js'
+      filename: 'bundle.js',
+      publicPath: '/build/',
     },
     devtool: ifProd('source-map', 'eval'),
     module: {
