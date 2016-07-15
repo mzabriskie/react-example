@@ -69,6 +69,11 @@
       "text",
       "lcov"
     ],
+    "exclude": [
+      "**/*.(test|stub).js",
+      "**/helpers/**",
+      "**/fixtures/**"
+    ],
     "sourceMap": false,
     "instrument": false,
     "require": [
