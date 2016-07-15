@@ -14,11 +14,11 @@ describe('GitHub API', () => {
   })
 
   describe('getRepos', () => {
-    it.skip('should make a request to the proper url for the given user', done => {
+    it('should make a request to the proper url for the given user', done => {
       const data = getMockRepos(6)
       const successHandler = spy()
 
-      moxios.stubRequest(/^https:\/\/api\.github\.com\/users\/kentcdodds\/repos/, {
+      moxios.stubRequest(/^https\:\/\/api\.github\.com\/users\/kentcdodds\/repos/, {
         status: 200,
         response: data,
       })
@@ -29,7 +29,6 @@ describe('GitHub API', () => {
         expect(successHandler).to.have.been.calledWith(data)
         done()
       })
-
     })
   })
 
@@ -39,11 +38,11 @@ describe('GitHub API', () => {
       const orgs = getMockOrgs()
       const successHandler = spy()
 
-      moxios.stubRequest(/^https:\/\/api\.github\.com\/users\/kentcdodds/, {
+      moxios.stubRequest(/^https\:\/\/api\.github\.com\/users\/kentcdodds/, {
         status: 200,
         response: user,
       })
-      moxios.stubRequest(/^https:\/\/api\.github\.com\/users\/kentcdodds\/orgs/, {
+      moxios.stubRequest(/^https\:\/\/api\.github\.com\/users\/kentcdodds\/orgs/, {
         status: 200,
         response: orgs,
       })
@@ -52,7 +51,7 @@ describe('GitHub API', () => {
 
       moxios.wait(() => {
         expect(successHandler).to.have.been.calledOnce
-        expect(successHandler).to.have.been.calledWith({user, orgs})
+        expect(successHandler).to.have.been.calledWith(user, orgs)
         done()
       })
     })
