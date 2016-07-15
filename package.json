@@ -4,10 +4,8 @@
   "description": "Simple React example app",
   "main": "index.js",
   "scripts": {
-    "test:base": "mocha app/**/*.test.js --require ./test/helpers/setup.js",
-    "test": "npm run test:base -- --compilers js:babel-register",
-    "watch:test": "npm test -- -w",
-    "cover": "cross-env NODE_ENV=test nyc npm run test:base",
+    "test": "cross-env NODE_ENV=test nyc mocha",
+    "watch:test": "mocha -w",
     "build": "webpack --env.production",
     "start": "webpack-dev-server --inline --content-base ./ --env.dev"
   },
