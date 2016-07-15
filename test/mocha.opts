@@ -1,3 +1,2 @@
---compilers js:babel-register
 --require ./test/helpers/setup.js
 app/**/*.test.js

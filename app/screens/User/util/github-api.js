@@ -4,8 +4,13 @@ export {getRepos, getUserData}
 
 function getRepos(user) {
   const url = `https://api.github.com/users/${user}/repos?per_page=250`
+  throw new Error(user)
   return axios
     .get(url)
+    .then(response => {
+      console.log(response)
+      return response
+    })
     .then(response => response.data)
 }
 

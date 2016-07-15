@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha",
-    "watch:test": "mocha -w",
+    "watch:test": "mocha --watch --compilers js:babel-register",
     "build": "webpack --env.production",
     "start": "webpack-dev-server --inline --content-base ./ --env.dev"
   },
@@ -46,6 +46,7 @@
     "jsdom": "9.4.1",
     "lodash": "4.13.1",
     "mocha": "2.5.3",
+    "moxios": "0.3.0",
     "nyc": "7.0.0",
     "react-addons-test-utils": "15.2.1",
     "sinon": "1.17.4",

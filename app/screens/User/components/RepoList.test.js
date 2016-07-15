@@ -63,10 +63,10 @@ function mountComponent(props = {}) {
 }
 
 function getDefaultProps() {
-  const defaultProps = {
+  return {
     user: 'luke-skywalker',
     filter: '',
-    getRepos: getRepos,
+    getRepos,
   }
 }
 

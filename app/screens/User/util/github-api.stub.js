@@ -2,7 +2,7 @@ import _ from 'lodash'
 import {random as randomStarWarsName} from 'starwars-names'
 import moment from 'moment'
 
-export {getRepos, getMockRepo, getMockRepos}
+export {getRepos, getMockRepo, getMockRepos, getMockUser, getMockOrgs}
 
 function getRepos(user) {
   return Promise.resolve({
@@ -39,4 +39,29 @@ function getRandomTimestamp() {
     second: _.random(0, 59),
     millisecond: _.random(0, 999),
   }).format()
+}
+
+function getMockUser(overrides = {}) {
+  const name = randomStarWarsName()
+  return {
+    name,
+    avatar_url: 'http://lorempixel.com/512/512/',
+    login: _.kebabCase(name),
+    followers: _.random(20, 1000),
+    public_repos: _.random(10, 300),
+    following: _.random(5, 150),
+    ...overrides,
+  }
+}
+
+function getMockOrg(overrides = {}) {
+  return {
+    avatar_url: 'http://lorempixel.com/512/512/',
+    login: _.kebabCase(randomStarWarsName()),
+    ...overrides,
+  }
+}
+
+function getMockOrgs(number = _.random(1, 10)) {
+  return  _.times(number, () => getMockOrg())
 }
