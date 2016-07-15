@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Tooltip from 'react-tooltip';
-import axios from 'axios';
+import {getUserData} from '../util/github-api'
 import ProfileStat from './ProfileStat';
 
 export default React.createClass({
@@ -10,7 +10,8 @@ export default React.createClass({
 
   getDefaultProps() {
     return {
-      user: null
+      user: null,
+      getUserData,
     };
   },
 
@@ -21,18 +22,11 @@ export default React.createClass({
     };
   },
 
-  getUser(props) {
-    props = props || this.props;
-    axios.all([
-        axios.get(`https://api.github.com/users/${props.user}`),
-        axios.get(`https://api.github.com/users/${props.user}/orgs`)
-      ])
-      .then(axios.spread((user, orgs) => {
-        this.setState({
-          user: user.data,
-          orgs: orgs.data
-        });
-      }));
+  getUser(props = this.props) {
+    props.getUserData(props.user)
+      .then(({user, orgs}) => {
+        this.setState({user, orgs})
+      })
   },
 
   componentWillMount() {

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import axios from 'axios';
+import {getRepos} from '../util/github-api'
 import RepoListItem from './RepoListItem';
 
 export default React.createClass({
@@ -11,7 +11,8 @@ export default React.createClass({
   getDefaultProps() {
     return {
       user: null,
-      filter: null
+      filter: null,
+      getRepos, // for testing to be able to override with a stub
     };
   },
 
@@ -21,14 +22,10 @@ export default React.createClass({
     };
   },
 
-  getRepos(props) {
-    props = props || this.props;
-    axios.get(`https://api.github.com/users/${props.user}/repos?per_page=250`)
-      .then((repos) => {
-        this.setState({
-          repos: repos.data
-        });
-      });
+  getRepos(props = this.props) {
+    props.getRepos(props.user).then((repos) => {
+      this.setState({repos});
+    });
   },
 
   componentWillMount() {
@@ -36,7 +33,10 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(props) {
-    this.getRepos(props);
+    const usernameChanged = props.user !== this.props.user
+    if (usernameChanged) {
+      this.getRepos(props)
+    }
   },
 
   renderRepos() {
