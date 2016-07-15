@@ -24,11 +24,7 @@ export default React.createClass({
               />
             </div>
           </div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={this.handleSubmit}
-          >
+          <button type="submit" className="btn btn-primary">
             Go
           </button>
         </form>
