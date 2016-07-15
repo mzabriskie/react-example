@@ -16,6 +16,10 @@ module.exports = env => {
       publicPath: '/build/',
     },
     devtool: ifProd('source-map', 'eval'),
+    devServer: {
+      port: 8080,
+      historyApiFallback: true
+    },
     module: {
       loaders: [
         { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
