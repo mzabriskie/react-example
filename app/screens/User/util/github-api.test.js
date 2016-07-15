@@ -29,6 +29,7 @@ describe('GitHub API', () => {
         expect(successHandler).to.have.been.calledWith(data)
         done()
       })
+
     })
   })
 
