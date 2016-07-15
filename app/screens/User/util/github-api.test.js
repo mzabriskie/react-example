@@ -33,12 +33,12 @@ describe('GitHub API', () => {
   })
 
   describe('getUserData', () => {
-    it.skip('should make a request to the proper urls for the given user', done => {
+    it('should make a request to the proper urls for the given user', done => {
       const user = getMockUser()
       const orgs = getMockOrgs()
       const successHandler = spy()
 
-      moxios.stubRequest(/^https\:\/\/api\.github\.com\/users\/kentcdodds/, {
+      moxios.stubRequest(/^https\:\/\/api\.github\.com\/users\/kentcdodds$/, {
         status: 200,
         response: user,
       })
@@ -51,7 +51,7 @@ describe('GitHub API', () => {
 
       moxios.wait(() => {
         expect(successHandler).to.have.been.calledOnce
-        expect(successHandler).to.have.been.calledWith(user, orgs)
+        expect(successHandler).to.have.been.calledWith({user, orgs})
         done()
       })
     })
