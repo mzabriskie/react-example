@@ -1,19 +1,19 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import moment from 'moment';
 
 export default React.createClass({
   propTypes: {
-    repo: PropTypes.object
+    repo: PropTypes.object,
   },
 
   getDefaultProps() {
     return {
-      repo: {}
+      repo: {},
     };
   },
 
   render() {
-    let repo = this.props.repo;
+    const repo = this.props.repo;
     return (
       <li className="border-bottom">
         <div className="pull-right">
@@ -26,5 +26,5 @@ export default React.createClass({
         <time>Updated {moment(repo.pushed_at).fromNow()}</time>
       </li>
     );
-  }
+  },
 });

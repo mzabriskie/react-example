@@ -1,21 +1,22 @@
-import _ from 'lodash'
-import {random as randomStarWarsName} from 'starwars-names'
-import moment from 'moment'
+/* eslint camelcase:0 */
+import _ from 'lodash';
+import {random as randomStarWarsName} from 'starwars-names';
+import moment from 'moment';
 
-export {getRepos, getMockRepo, getMockRepos, getMockUser, getMockOrgs}
+export {getRepos, getMockRepo, getMockRepos, getMockUser, getMockOrgs};
 
-function getRepos(user) {
+function getRepos() {
   return Promise.resolve({
-    data: getMockRepos()
-  })
+    data: getMockRepos(),
+  });
 }
 
 function getMockRepos(number = _.random(1, 40)) {
-  return  _.times(number, () => getMockRepo())
+  return _.times(number, () => getMockRepo());
 }
 
 function getMockRepo(overrides = {}) {
-  const name = overrides.name || _.kebabCase(randomStarWarsName())
+  const name = overrides.name || _.kebabCase(randomStarWarsName());
   return {
     id: _.uniqueId(),
     language: _.sample('JavaScript', 'CSS', 'HTML', 'Ruby', 'Go', 'Elm'),
@@ -26,7 +27,7 @@ function getMockRepo(overrides = {}) {
     description: `The awesome repo for the ${name} project!`,
     pushed_at: getRandomTimestamp(),
     ...overrides,
-  }
+  };
 }
 
 function getRandomTimestamp() {
@@ -38,11 +39,11 @@ function getRandomTimestamp() {
     minute: _.random(0, 59),
     second: _.random(0, 59),
     millisecond: _.random(0, 999),
-  }).format()
+  }).format();
 }
 
 function getMockUser(overrides = {}) {
-  const name = randomStarWarsName()
+  const name = randomStarWarsName();
   return {
     name,
     avatar_url: 'http://lorempixel.com/512/512/',
@@ -51,7 +52,7 @@ function getMockUser(overrides = {}) {
     public_repos: _.random(10, 300),
     following: _.random(5, 150),
     ...overrides,
-  }
+  };
 }
 
 function getMockOrg(overrides = {}) {
@@ -59,9 +60,9 @@ function getMockOrg(overrides = {}) {
     avatar_url: 'http://lorempixel.com/512/512/',
     login: _.kebabCase(randomStarWarsName()),
     ...overrides,
-  }
+  };
 }
 
 function getMockOrgs(number = _.random(1, 10)) {
-  return  _.times(number, () => getMockOrg())
+  return _.times(number, () => getMockOrg());
 }

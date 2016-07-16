@@ -1,17 +1,17 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 
-export default React.createClass({
-  propTypes: {
-    value: PropTypes.number,
-    label: PropTypes.string
-  },
+export default ProfileStat;
 
-  render() {
-    return (
-      <span>
-        <h2>{this.props.value}</h2>
-        <small>{this.props.label}</small>
-      </span>
-    );
-  }
-});
+function ProfileStat({value, label}) {
+  return (
+    <span>
+      <h2>{value}</h2>
+      <small>{label}</small>
+    </span>
+  );
+}
+
+ProfileStat.propTypes = {
+  value: PropTypes.number,
+  label: PropTypes.string,
+};

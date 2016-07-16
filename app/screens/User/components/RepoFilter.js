@@ -1,13 +1,13 @@
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 
 export default React.createClass({
   propTypes: {
-    onKeyUp: PropTypes.func
+    onKeyUp: PropTypes.func,
   },
 
   getDefaultProps() {
     return {
-      onKeyUp() {}
+      onKeyUp() {},
     };
   },
 
@@ -26,5 +26,5 @@ export default React.createClass({
         />
       </section>
     );
-  }
+  },
 });

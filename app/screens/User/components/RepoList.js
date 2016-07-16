@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
-import {getRepos} from '../util/github-api'
+import React, {PropTypes} from 'react';
+import {getRepos} from '../util/github-api';
 import RepoListItem from './RepoListItem';
 
 export default React.createClass({
   propTypes: {
     user: PropTypes.string,
-    filter: PropTypes.string
+    filter: PropTypes.string,
   },
 
   getDefaultProps() {
@@ -18,12 +18,12 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      repos: []
+      repos: [],
     };
   },
 
   getRepos(props = this.props) {
-    props.getRepos(props.user).then((repos) => {
+    props.getRepos(props.user).then(repos => {
       this.setState({repos});
     });
   },
@@ -33,22 +33,22 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(props) {
-    const usernameChanged = props.user !== this.props.user
+    const usernameChanged = props.user !== this.props.user;
     if (usernameChanged) {
-      this.getRepos(props)
+      this.getRepos(props);
     }
   },
 
   renderRepos() {
-    let filter = this.props.filter ? this.props.filter.toLowerCase() : null;
+    const filter = this.props.filter ? this.props.filter.toLowerCase() : null;
     return this.state.repos
-      .filter((repo) => {
+      .filter(repo => {
         return !filter ||
           (repo.name && repo.name.toLowerCase().includes(filter)) ||
           (repo.description && repo.description.toLowerCase().includes(filter));
       })
       .sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at))
-      .map((repo) => <RepoListItem key={repo.id} repo={repo}/>);
+      .map(repo => <RepoListItem key={repo.id} repo={repo} />);
   },
 
   render() {
@@ -57,5 +57,5 @@ export default React.createClass({
         {this.renderRepos()}
       </ul>
     );
-  }
+  },
 });

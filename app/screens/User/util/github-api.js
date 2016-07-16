@@ -1,21 +1,21 @@
-import axios from 'axios'
+import axios from 'axios';
 
-export {getRepos, getUserData}
+export {getRepos, getUserData};
 
-function getRepos(user) {
-  const url = `https://api.github.com/users/${user}/repos?per_page=250`
+function getRepos(username) {
+  const url = `https://api.github.com/users/${username}/repos?per_page=250`;
   return axios
     .get(url)
-    .then(response => response.data)
+    .then(response => response.data);
 }
 
-function getUserData(user) {
+function getUserData(username) {
   return axios.all([
-      axios.get(`https://api.github.com/users/${user}`),
-      axios.get(`https://api.github.com/users/${user}/orgs`)
-    ])
+    axios.get(`https://api.github.com/users/${username}`),
+    axios.get(`https://api.github.com/users/${username}/orgs`),
+  ])
     .then(axios.spread((user, orgs) => ({
       user: user.data,
       orgs: orgs.data,
-    })))
+    })));
 }

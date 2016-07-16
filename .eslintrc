@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "kentcdodds",
+    "kentcdodds/react",
+    "kentcdodds/webpack",
+    "kentcdodds/mocha",
+    "kentcdodds/jsx-a11y"
+  ],
+  "rules": {
+    // overrides go here
+    "semi": [2, "always"]
+  }
+}
