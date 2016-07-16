@@ -5,16 +5,15 @@ import Home from './index'
 
 describe(Home.displayName, () => {
   it('should render a form to input a github username', () => {
-    const wrapper = render(<Home />)
+    const context = getContextStub()
+    const wrapper = render(<Home />, {context})
     expect(wrapper).descendants('form input')
     expect(wrapper).descendants('form button[type=submit]')
   })
 
   it('should route to the user page with the username when the form is submitted', () => {
     const username = 'defunkt'
-    const push = spy()
-    const context = {router: {push}}
-
+    const context = getContextStub()
     const wrapper = mount(<Home />, {context})
 
     const form = wrapper.find('form')
@@ -22,8 +21,13 @@ describe(Home.displayName, () => {
 
     input.node.value = username
     form.simulate('submit')
-    
-    expect(push).to.have.been.calledOnce
-    expect(push).to.have.been.calledWith({pathname: `/${username}`})
+
+    expect(context.router.push).to.have.been.calledOnce
+    expect(context.router.push).to.have.been.calledWith({pathname: `/${username}`})
   })
 })
+
+function getContextStub() {
+    const push = spy()
+    return {router: {push}}
+}

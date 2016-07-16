@@ -71,7 +71,8 @@
     "exclude": [
       "**/*.(test|stub).js",
       "**/helpers/**",
-      "**/fixtures/**"
+      "**/fixtures/**",
+      "**/build/**"
     ],
     "sourceMap": false,
     "instrument": false,

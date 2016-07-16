@@ -26,6 +26,14 @@ describe(RepoList.displayName, () => {
     expect(getReposSpy).to.have.been.calledWith('han')
   })
 
+  it('should not invoke the getRpos method when the user has not changed', () => {
+    const getReposSpy = getGetReposSpy()
+    const wrapper = mountComponent({getRepos: getReposSpy, user: 'buddy'})
+    getReposSpy.reset()
+    wrapper.setProps({filter: 'bud'})
+    expect(getReposSpy).to.have.not.been.called
+  })
+
   it('should list the repositories', done => {
     const totalRepos = 3
     const getReposSpy = getGetReposSpy(getMockRepos(totalRepos))
