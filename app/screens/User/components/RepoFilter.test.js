@@ -3,7 +3,7 @@ import {mount} from 'enzyme';
 import sinon from 'sinon';
 import RepoFilter from './RepoFilter';
 
-describe(RepoFilter.displayName, () => {
+describe('RepoFilter', () => {
   it('should call the onKeyUp prop', () => {
     const onKeyUp = sinon.spy();
     const wrapper = mountComponent({onKeyUp});

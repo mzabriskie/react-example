@@ -2,7 +2,7 @@ import React from 'react';
 import {render} from 'enzyme';
 import ProfileStat from './ProfileStat';
 
-describe(ProfileStat.displayName, () => {
+describe('ProfileStat', () => {
   it('should render the `value` in <h2>', () => {
     const value = 42;
     const wrapper = renderComponent({value});

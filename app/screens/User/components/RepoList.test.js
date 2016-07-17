@@ -4,7 +4,7 @@ import {spy} from 'sinon';
 import {getRepos, getMockRepo, getMockRepos} from '../util/github-api.stub';
 import RepoList from './RepoList';
 
-describe(RepoList.displayName, () => {
+describe('RepoList', () => {
   it('should render no repos by default', () => {
     const wrapper = mountComponent();
     expect(wrapper.find('li')).to.have.length(0);
