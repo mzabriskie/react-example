@@ -1,4 +1,4 @@
-const {resolve} = require('path');
+const path = require('path');
 const webpack = require('webpack');
 const validate = require('webpack-validator');
 
@@ -11,7 +11,7 @@ module.exports = env => {
     entry: './index.js',
     context: __dirname,
     output: {
-      path: resolve(__dirname, './build'),
+      path: path.resolve(__dirname, './build'),
       filename: 'bundle.js',
       publicPath: '/build/',
     },
