@@ -1,11 +1,10 @@
 const {resolve} = require('path');
 const webpack = require('webpack');
 const validate = require('webpack-validator');
+const {getIfUtils, removeEmpty} = require('webpack-config-utils');
 
 module.exports = env => {
-  const valueIf = (add, value, alternate) => add ? value : alternate;
-  const ifProd = (value, alternate) => valueIf(env.prod, value, alternate);
-  const removeEmpty = array => array.filter(i => !!i);
+  const {ifProd, ifNotProd} = getIfUtils(env)
 
   return validate({
     entry: './index.js',
@@ -14,6 +13,7 @@ module.exports = env => {
       path: resolve(__dirname, './build'),
       filename: 'bundle.js',
       publicPath: '/build/',
+      pathinfo: ifNotProd(),
     },
     devtool: ifProd('source-map', 'eval'),
     devServer: {
@@ -22,10 +22,10 @@ module.exports = env => {
     },
     module: {
       loaders: [
-        { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
-        { test: /\.css$/, loader: 'style-loader!css-loader' },
-        { test: /(\.eot|\.woff2|\.woff|\.ttf|\.svg)/, loader: 'file-loader' }
-      ]
+        {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+        {test: /\.css$/, loader: 'style-loader!css-loader'},
+        {test: /(\.eot|\.woff2|\.woff|\.ttf|\.svg)/, loader: 'file-loader'},
+      ],
     },
     plugins: removeEmpty([
       ifProd(new webpack.optimize.DedupePlugin()),

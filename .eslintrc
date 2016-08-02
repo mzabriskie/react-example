@@ -1,13 +1,17 @@
 {
   "extends": [
-    "kentcdodds",
+    "kentcdodds/best-practices",
+    "kentcdodds/possible-errors",
+    "kentcdodds/es6/best-practices",
+    "kentcdodds/es6/possible-errors",
+    "kentcdodds/import/best-practices",
+    "kentcdodds/import/possible-errors",
+    "kentcdodds/mocha",
     "kentcdodds/react",
     "kentcdodds/webpack",
-    "kentcdodds/mocha",
     "kentcdodds/jsx-a11y"
   ],
   "rules": {
-    // overrides go here
-    "semi": [2, "always"]
-  }
+    "mocha/no-hooks": 0,
+  },
 }
