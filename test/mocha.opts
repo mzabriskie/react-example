@@ -1,3 +1,0 @@
---require ./test/helpers/setup.js
---slow 250
-app/**/*.test.js
