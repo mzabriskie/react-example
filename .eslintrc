@@ -14,5 +14,6 @@
   "rules": {
     "mocha/no-hooks": 0,
     "react/prefer-stateless-function": 0,
+    "no-invalid-this": 0,
   },
 }

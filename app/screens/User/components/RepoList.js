@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import RepoListItem from './RepoListItem';
 
 export default class RepoList extends Component {
@@ -62,16 +62,26 @@ export default class RepoList extends Component {
 
   render() {
     const {repos} = this.state
+    const {filter} = this.props
     return (
       <ul className="list-unstyled">
-        {renderRepos(repos)}
+        {renderRepos(repos, filter.toLowerCase())}
       </ul>
     );
   }
 }
 
-function renderRepos(repos) {
+RepoList.propTypes = {
+  filter: PropTypes.string.isRequired,
+};
+
+function renderRepos(repos, filter) {
   return repos
-  .sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at))
-  .map(repo => <RepoListItem key={repo.id} repo={repo} />);
+    .filter(repo => {
+      return !filter ||
+        (repo.name && repo.name.toLowerCase().includes(filter)) ||
+        (repo.description && repo.description.toLowerCase().includes(filter));
+    })
+    .sort((a, b) => Date.parse(b.pushed_at) - Date.parse(a.pushed_at))
+    .map(repo => <RepoListItem key={repo.id} repo={repo} />);
 }
