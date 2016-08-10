@@ -13,7 +13,8 @@ To run the app locally:
 git clone https://github.com/mzabriskie/react-example.git
 cd react-example
 npm run setup
-open http://127.0.0.1:8080
+npm run dev
+open http://localhost:8080
 ```
 
 [React]: http://facebook.github.io/react/
