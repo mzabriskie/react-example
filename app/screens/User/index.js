@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Profile from './components/Profile'
+import RepoFilter from './components/RepoFilter'
+import RepoList from './components/RepoList'
 
 export default class User extends Component {
   render() {
@@ -11,8 +13,8 @@ export default class User extends Component {
           </div>
           <div className="col-sm-9">
             <h3>Repositories</h3>
-            <div>Repo Filter</div>
-            <div>Repo List</div>
+            <RepoFilter />
+            <RepoList />
           </div>
         </div>
       </div>

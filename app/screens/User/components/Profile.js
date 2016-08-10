@@ -5,31 +5,33 @@ import ProfileStat from './ProfileStat'
 export default class Profile extends Component {
   constructor() {
     super()
-    this.user = {
-      avatar_url: 'https://avatars.githubusercontent.com/u/199035?v=3',
-      name: 'Matt Zabriskie',
-      login: 'mzabriskie',
-      followers: 528,
-      public_repos: 74,
-      following: 4,
+    this.state = {
+      user: {
+        avatar_url: 'https://avatars.githubusercontent.com/u/199035?v=3',
+        name: 'Matt Zabriskie',
+        login: 'mzabriskie',
+        followers: 528,
+        public_repos: 74,
+        following: 4,
+      },
+      orgs: [
+        {
+          login: 'facebook',
+          id: 69631,
+          avatar_url: 'https://avatars.githubusercontent.com/u/69631?v=3',
+        },
+        {
+          login: 'reactjs',
+          id: 6412038,
+          avatar_url: 'https://avatars.githubusercontent.com/u/6412038?v=3',
+        },
+        {
+          login: 'javascriptair',
+          id: 15834066,
+          avatar_url: 'https://avatars.githubusercontent.com/u/15834066?v=3',
+        }
+      ]
     }
-    this.orgs = [
-      {
-        login: 'facebook',
-        id: 69631,
-        avatar_url: 'https://avatars.githubusercontent.com/u/69631?v=3',
-      },
-      {
-        login: 'reactjs',
-        id: 6412038,
-        avatar_url: 'https://avatars.githubusercontent.com/u/6412038?v=3',
-      },
-      {
-        login: 'javascriptair',
-        id: 15834066,
-        avatar_url: 'https://avatars.githubusercontent.com/u/15834066?v=3',
-      }
-    ]
   }
 
   render() {
