@@ -10,7 +10,7 @@ export default class RepoList extends Component {
 
   getRepos() {
     const {username} = this.props
-    getRepos(username).then(repos => {
+    this.props.getRepos(username).then(repos => {
       this.setState({repos});
     });
   }
@@ -33,7 +33,9 @@ export default class RepoList extends Component {
 RepoList.propTypes = {
   filter: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
+  getRepos: PropTypes.func,
 };
+RepoList.defaultProps = {getRepos}
 
 function renderRepos(repos, filter) {
   return repos
