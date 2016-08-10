@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 
 export default class RepoFilter extends Component {
   render() {
@@ -8,8 +8,13 @@ export default class RepoFilter extends Component {
           type="text"
           placeholder="Filter repositories..."
           className="form-control"
+          onKeyUp={({target: {value}}) => this.props.onUpdate(value)}
         />
       </section>
     );
   }
 }
+
+RepoFilter.propTypes = {
+  onUpdate: PropTypes.func.isRequired,
+};

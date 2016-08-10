@@ -4,7 +4,17 @@ import RepoFilter from './components/RepoFilter'
 import RepoList from './components/RepoList'
 
 export default class User extends Component {
+  constructor() {
+    super()
+    this.state = {filter: ''}
+  }
+
+  handleFilterUpdate = (filter) => {
+    this.setState({filter})
+  }
+
   render() {
+    const {filter} = this.state
     return (
       <div className="container">
         <div className="row">
@@ -13,8 +23,8 @@ export default class User extends Component {
           </div>
           <div className="col-sm-9">
             <h3>Repositories</h3>
-            <RepoFilter />
-            <RepoList />
+            <RepoFilter onUpdate={this.handleFilterUpdate} />
+            <RepoList filter={filter} />
           </div>
         </div>
       </div>
