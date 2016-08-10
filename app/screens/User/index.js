@@ -19,12 +19,12 @@ export default class User extends Component {
       <div className="container">
         <div className="row">
           <div className="col-sm-3">
-            <Profile />
+            <Profile username="mzabriskie" />
           </div>
           <div className="col-sm-9">
             <h3>Repositories</h3>
             <RepoFilter onUpdate={this.handleFilterUpdate} />
-            <RepoList filter={filter} />
+            <RepoList filter={filter} username="mzabriskie" />
           </div>
         </div>
       </div>
