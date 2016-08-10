@@ -2,13 +2,17 @@
 
 React example app that demonstrates using [React] with [webpack], and [babeljs], as well as project structure.
 
+Requirements:
+- git
+- Node v6
+- npm v3
+
 To run the app locally:
 
 ```bash
 git clone https://github.com/mzabriskie/react-example.git
 cd react-example
-npm install
-npm start
+npm run setup
 open http://127.0.0.1:8080
 ```
 

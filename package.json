@@ -10,6 +10,7 @@
     "test": "cross-env NODE_ENV=test nyc mocha",
     "watch:test": "mocha --watch --compilers js:babel-register",
     "start": "http-server",
+    "setup": "npm install && npm run validate",
     "validate": "npm-run-all lint test build"
   },
   "repository": {
