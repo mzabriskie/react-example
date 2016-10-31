@@ -34,10 +34,10 @@
     "react-tooltip": "3.1.5"
   },
   "devDependencies": {
-    "babel-core": "6.13.2",
-    "babel-loader": "6.2.4",
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.4",
     "babel-plugin-istanbul": "1.0.3",
-    "babel-preset-es2015": "6.13.2",
+    "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "6.11.1",
     "babel-preset-stage-2": "6.13.0",
     "babel-register": "6.11.6",
@@ -51,6 +51,7 @@
     "file-loader": "0.9.0",
     "http-server": "0.9.0",
     "jsdom": "9.4.1",
+    "jsx-control-statements": "^3.1.5",
     "lodash": "4.14.2",
     "mocha": "3.0.2",
     "moxios": "0.3.0",
