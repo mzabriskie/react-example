@@ -29,6 +29,7 @@
     "history": "^3.0.0",
     "moment": "^2.10.6",
     "oauth": "^0.9.15",
+    "object-assign": "^4.1.1",
     "react": "15.3.0",
     "react-cookie": "^1.0.4",
     "react-dom": "15.3.0",

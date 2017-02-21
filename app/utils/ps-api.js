@@ -1,48 +1,30 @@
 import axios from 'axios';
 import cookie from "react-cookie";
 
-const BASE_URL = 'https://api.pocketsmith.com';
+const BASE_URL = 'https://api.pocketsmith.com/v2';
 
-export {getUser, getUserAccounts, refreshToken};
+export {getUser, getUserAccounts, refreshToken, setCookie};
 
-// function getUser() {
-//     const url = `${BASE_URL}/v2/me`;
-//     return axios.get(url, {
-//         headers: {
-//             Authorization: "Bearer " + cookie.load('access_token')
-//         }
-//     }).then(([user]) => ({user: user.data}));
-// }
+function setCookie() {
+    console.log(cookie.load('access_token'))
+    if (window.location.hash != "" && window.location.hash != null) {
+        var hash = window.location.hash;
+        // console.log("xx" + hash);
+        var res = hash.split("&");
+        var access_token = /=(.+)/.exec(res[0])[1];
+        // console.log(hash);
+        var exprDuration = new Date(new Date().getTime() + 10*1000);
+        console.log(exprDuration);
+        cookie.save("access_token", access_token, {expires: exprDuration});
+    }
+    // console.log(cookie.load('access_token'))
+}
 
 
-// function getUser() {
-//     return axios.all([
-//         axios.get(`${BASE_URL}/v2/me`, {
-//             headers: {
-//                 Authorization: "Bearer " + cookie.load('access_token')
-//             }
-//         })
-//     ])
-//         .then(([user]) => ({user: user.data}));
-// }
-
-// function getUser() {
-//     return axios.get(`${BASE_URL}/v2/me`, {
-//         headers: {
-//             Authorization: "Bearer " + cookie.load('access_token')
-//         }
-//     }).then((users) => {
-//         {user: users.data}
-//
-//     })
-//         .catch(function (error) {
-//             console.log(error);
-//         });
-// }
 function getUser() {
     refreshToken("user");
 
-    return axios.get(`${BASE_URL}/v2/me`, {
+    return axios.get(`${BASE_URL}/me`, {
         headers: {
             Authorization: "Bearer " + cookie.load('access_token')
         }
@@ -55,7 +37,7 @@ function getUser() {
 function getUserAccounts(userId) {
     refreshToken("accounts");
 
-    return axios.get(`${BASE_URL}/v2/users/${userId}/transaction_accounts`, {
+    return axios.get(`${BASE_URL}/users/${userId}/accounts`, {
         headers: {
             Authorization: "Bearer " + cookie.load('access_token')
         }

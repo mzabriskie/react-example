@@ -1,96 +1,116 @@
-import React, {Component} from 'react';
-import cookie from "react-cookie";
-import {getUser, getUserAccounts} from '../../utils/ps-api'
+import React, {Component} from 'react'
+import cookie from 'react-cookie'
+import assign from 'object-assign'
+import Accounts from './Accounts'
+import Date from './Date'
+import Category from './Category'
+import Details from './Details'
+import Amount from './Amount'
+import Result from './Result'
+import {setCookie} from '../../utils/ps-api'
 
 
-export default class Accounts extends Component {
+let fieldValues = {
+    accountId: null,
+    date: null,
+    category: null,
+    merchant: null,
+    note: null,
+    label: [],
+    amount: null
+}
+
+export default class App extends Component {
     constructor() {
         super()
-        this.state = {user: {}, accounts: []}
+        this.state = {step: 1}
 
         // console.log(cookie.load('access_token'));
         // if (cookie.load('access_token') == "" || cookie.load('access_token') == null) {
         //     console.log("constractor " + cookie.load('access_token'));
         //     window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002")
         // }
-        this.setCookie();
-
-        setTimeout(function () {
-            if (cookie.load('access_token') == "" || cookie.load('access_token') == null) {
-                console.log("constractor " + cookie.load('access_token'));
-                window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002")
-            }
-        },0) ;
+        // setCookie();
+        //
+        // setTimeout(function () {
+        //     if (cookie.load('access_token') == "" || cookie.load('access_token') == null) {
+        //         console.log("constractor " + cookie.load('access_token'));
+        //         window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002")
+        //     }
+        // }, 0);
     }
 
-    setCookie() {
-        if (window.location.hash != "" && window.location.hash != null) {
-            var hash = window.location.hash;
-            // console.log("xx" + hash);
-            var res = hash.split("&");
-            var access_token = /=(.+)/.exec(res[0])[1];
-            // console.log(hash);
-            cookie.save("access_token", access_token, {maxAge: 3000});
+    saveValues(field_value) {
+        return function () {
+            fieldValues = assign({}, fieldValues, field_value)
+        }.bind(this)()
+        console.log("values " + fieldValues);
+    }
+
+    nextStep() {
+        console.log(this.state.step);
+        // this.setState({
+        //     step: this.state.step + 1
+        // })
+        console.log(fieldValues);
+    }
+
+    previousStep() {
+        this.setState({
+            step: this.state.step - 1
+        })
+    }
+
+    submitRegistration() {
+        // Handle via ajax submitting the user data, upon
+        // success return this.nextStop(). If it fails,
+        // show the user the error but don't advance
+        alert(fieldValues);
+        this.nextStep()
+    }
+
+    showStep() {
+        switch (this.state.step) {
+            case 1:
+                return <Accounts fieldValues={fieldValues}
+                                 nextStep={this.nextStep.bind(this)}
+                                 saveValues={this.saveValues}/>
+            case 2:
+                return <Date fieldValues={fieldValues}
+                             nextStep={this.nextStep}
+                             previousStep={this.previousStep}
+                             saveValues={this.saveValues}/>
+            case 3:
+                return <Category fieldValues={fieldValues}
+                                 nextStep={this.nextStep}
+                                 previousStep={this.previousStep}
+                                 saveValues={this.saveValues}/>
+            case 4:
+                return <Date fieldValues={fieldValues}
+                             nextStep={this.nextStep}
+                             previousStep={this.previousStep}
+                             saveValues={this.saveValues}/>
+            case 5:
+                return <Details fieldValues={fieldValues}
+                                nextStep={this.nextStep}
+                                previousStep={this.previousStep}
+                                saveValues={this.saveValues}/>
+            case 6:
+                return <Amount fieldValues={fieldValues}
+                               submitRegistration={this.submitRegistration}
+                               previousStep={this.previousStep}
+                               saveValues={this.saveValues}/>
+            case 7:
+                return <Result fieldValues={fieldValues}/>
         }
-        console.log(cookie.load('access_token'))
     }
-
-    getUserData() {
-        getUser()
-            .then(({user}) => {
-                this.setState({user});
-                cookie.save("user_id", user.id);
-                console.log(cookie.load('user_id'));
-                this.getUserAccountsData();
-            });
-    }
-
-    getUserAccountsData() {
-        getUserAccounts(cookie.load('user_id'))
-            .then(({accounts}) => {
-                this.setState({accounts});
-                // console.log({accounts});
-            });
-    }
-
-    componentWillMount() {
-
-    }
-
-    componentDidMount() {
-        if (cookie.load('access_token') != "" && cookie.load('access_token') != null) {
-            this.getUserData();
-            // console.log(cookie.load('user_id'));
-
-
-        }
-
-    }
-
 
     render() {
-        var output = null;
-        const user = this.state.user;
-        console.log(user);
-        const accounts = this.state.accounts;
-        if (accounts.length != 0) {
-            console.log(accounts.length);
-
-            output =
-                <section className="container home">
-                    {/*<a href="https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002">login</a>*/}
-                    {/*<a className="{ ? 'hide' : 'show' }"*/}
-                    {/*href="https://my.pocketsmith.com/logout?redirect_uri=http://localhost:3002">logout</a>*/}
-                    <h2>{user.name}</h2>
-                    {this.state.accounts.map((item) => {
-                        return <div key={item.id}>{item.name}</div>
-                    }) }
-                    {/*<h2>{accounts[0].name}</h2>*/}
-                </section>
-            ;
-        }
-
-        return output;
+        return (
+            <main>
+                {this.showStep()}
+            </main>
+        )
     }
 }
 
