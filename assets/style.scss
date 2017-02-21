@@ -1,0 +1,61 @@
+body {
+  color: #666;
+}
+
+time, strong, small {
+  color: #888;
+}
+
+strong {
+  margin-left: 10px;
+}
+
+h2, h4 {
+  color: #333;
+}
+
+h5 {
+  font-weight: 300;
+  font-size: 20px;
+}
+
+li {
+  padding: 25px 0;
+}
+
+section {
+  padding: 20px 0;
+  .home {
+    padding-top: 200px;
+    text-align: center;
+    button {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+  .stats {
+    text-align: center;
+    span {
+      display: inline-block;
+      width: 80px;
+    }
+    h2 {
+      margin: 0;
+    }
+  }
+  .orgs img {
+    border-radius: 3px;
+    margin: 5px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+.border-bottom {
+  border-bottom: 1px solid #eee;
+}
+
+a{
+  color: red;
+  font-size: 25px;
+}
