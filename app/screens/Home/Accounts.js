@@ -11,7 +11,7 @@ export default class Accounts extends Component {
 
         setCookie();
         setTimeout(function () {
-            if (cookie.load('access_token') == "" || cookie.load('access_token') === null) {
+            if (cookie.load('access_token') == "" || cookie.load('access_token') === null|| cookie.load('access_token') === undefined) {
                 console.log("constractor " + cookie.load('access_token'));
                 window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002")
             }
