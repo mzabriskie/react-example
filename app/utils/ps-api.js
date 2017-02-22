@@ -3,7 +3,7 @@ import cookie from "react-cookie";
 
 const BASE_URL = 'https://api.pocketsmith.com/v2';
 
-export {getUser, getUserAccounts, refreshToken, setCookie};
+export {getUser, getUserAccounts, getUserCategories, refreshToken, setCookie};
 
 function setCookie() {
     console.log(cookie.load('access_token'))
@@ -13,7 +13,7 @@ function setCookie() {
         var res = hash.split("&");
         var access_token = /=(.+)/.exec(res[0])[1];
         // console.log(hash);
-        var exprDuration = new Date(new Date().getTime() + 10*1000);
+        var exprDuration = new Date(new Date().getTime() + 3600 * 1000);
         console.log(exprDuration);
         cookie.save("access_token", access_token, {expires: exprDuration});
     }
@@ -42,6 +42,19 @@ function getUserAccounts(userId) {
             Authorization: "Bearer " + cookie.load('access_token')
         }
     }).then((userAccounts) => ({accounts: userAccounts.data}))
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
+function getUserCategories(userId) {
+    refreshToken("categories");
+
+    return axios.get(`${BASE_URL}/users/${userId}/categories`, {
+        headers: {
+            Authorization: "Bearer " + cookie.load('access_token')
+        }
+    }).then((userCategory) => ({categories: userCategory.data}))
         .catch(function (error) {
             console.log(error);
         });

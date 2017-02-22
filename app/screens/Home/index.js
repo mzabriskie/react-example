@@ -7,6 +7,7 @@ import Category from './Category'
 import Details from './Details'
 import Amount from './Amount'
 import Result from './Result'
+
 import {setCookie} from '../../utils/ps-api'
 
 
@@ -23,7 +24,7 @@ let fieldValues = {
 export default class App extends Component {
     constructor() {
         super()
-        this.state = {step: 1}
+        this.state = {step: 3}
 
         // console.log(cookie.load('access_token'));
         // if (cookie.load('access_token') == "" || cookie.load('access_token') == null) {

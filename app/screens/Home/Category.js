@@ -1,39 +1,68 @@
 import React, {Component} from 'react';
 import cookie from "react-cookie";
+import {StyleRoot} from 'radium';
+import {Treebeard, decorators} from 'react-treebeard';
 
-import {getUser, getUserAccounts} from '../../utils/ps-api'
+import data from './data';
+import styles from './styles';
+import * as filters from './filter';
+import {getUserCategories, setCookie} from '../../utils/ps-api'
 
+const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
-export default class Category extends Component {
-    constructor() {
-        super()
-        this.state = {user: {}, accounts: []}
+// Example: Customising The Header Decorator To Include Icons
+decorators.Header = (props) => {
+    const style = props.style;
+    // const iconType = props.node.children ? 'folder' : 'file-text';
+    const iconClass = `fa fa-location-arrow`;
+    const iconStyle = {marginRight: '5px'};
+    return (
+        <div className="base" style={style.base}>
+            <div className="title" style={style.title}>
+                <i className={iconClass} style={iconStyle}/>
+                {props.node.title}
+            </div>
+        </div>
+    );
+};
 
-        // console.log(cookie.load('access_token'));
-        // if (cookie.load('access_token') == "" || cookie.load('access_token') == null) {
-        //     console.log("constractor " + cookie.load('access_token'));
-        //     window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002")
-        // }
-        this.setCookie();
-
-        setTimeout(function () {
-            if (cookie.load('access_token') == "" || cookie.load('access_token') == null) {
-                console.log("constractor " + cookie.load('access_token'));
-                window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002")
-            }
-        },0) ;
+class NodeViewer extends React.Component {
+    constructor(props) {
+        super(props);
     }
 
-    setCookie() {
-        if (window.location.hash != "" && window.location.hash != null) {
-            var hash = window.location.hash;
-            // console.log("xx" + hash);
-            var res = hash.split("&");
-            var access_token = /=(.+)/.exec(res[0])[1];
-            // console.log(hash);
-            cookie.save("access_token", access_token, {maxAge: 3000});
+    render() {
+        const style = styles.viewer;
+        let json = JSON.stringify(this.props.node, null, 4);
+        if (!json) {
+            json = HELP_MSG;
         }
-        console.log(cookie.load('access_token'))
+        return (
+            <div className="test" style={style.base}>
+                {json}
+            </div>
+        );
+    }
+}
+
+NodeViewer.propTypes = {
+    node: React.PropTypes.object
+};
+
+export default class Category extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {user: {}, categories: []}
+        this.onToggle = this.onToggle.bind(this);
+
+        setCookie();
+        setTimeout(function () {
+            if (cookie.load('access_token') == "" || cookie.load('access_token') === null || cookie.load('access_token') === undefined) {
+                console.log("constractor " + cookie.load('access_token'));
+                window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read+categories.read+transactions.write&redirect_uri=http://localhost:3002")
+            }
+        }, 0);
+
     }
 
     getUserData() {
@@ -48,11 +77,12 @@ export default class Category extends Component {
 
     getUserAccountsData() {
         getUserAccounts(cookie.load('user_id'))
-            .then(({accounts}) => {
-                this.setState({accounts});
-                // console.log({accounts});
+            .then((accounts) => {
+                this.setState(accounts);
+                console.log(accounts);
             });
     }
+
 
     componentDidMount() {
         if (cookie.load('access_token') != "" && cookie.load('access_token') != null) {
@@ -61,33 +91,77 @@ export default class Category extends Component {
 
 
         }
+    }
+
+    onToggle(node, toggled) {
+        if (this.state.cursor) {
+            this.state.cursor.active = false;
+        }
+        node.active = true;
+        if (node.children) {
+            node.toggled = toggled;
+        }
+        this.setState({cursor: node});
+    }
+
+    onFilterMouseUp(e) {
+        const filter = e.target.value.trim();
+        if (!filter) {
+            return this.setState(categories);
+        }
+        var filtered = filters.filterTree(this.state.categories, filter);
+        filtered = filters.expandFilteredNodes(filtered, filter);
+        this.setState({categories: filtered});
+    }
+
+    getUserCategoriesDate() {
+        getUserCategories(cookie.load('user_id'))
+            .then((categories) => {
+                this.setState(categories);
+                console.log(categories);
+            });
+    }
+
+    componentDidMount() {
+        if (cookie.load('access_token') != "" && cookie.load('access_token') != null) {
+            this.getUserCategoriesDate();
+            // console.log(cookie.load('user_id'));
+        }
 
     }
 
 
     render() {
-        var output = null;
-        const user = this.state.user;
-        console.log(user);
-        const accounts = this.state.accounts;
-        if (accounts.length != 0) {
-            console.log(accounts.length);
+        const categories = this.state.categories;
 
-            output =
-                <section className="container home">
-                    {/*<a href="https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002">login</a>*/}
-                    {/*<a className="{ ? 'hide' : 'show' }"*/}
-                    {/*href="https://my.pocketsmith.com/logout?redirect_uri=http://localhost:3002">logout</a>*/}
-                    <h2>{user.name}</h2>
-                    {this.state.accounts.map((item) => {
-                        return <div key={item.id}>{item.name}</div>
-                    }) }
-                    {/*<h2>{accounts[0].name}</h2>*/}
-                </section>
-            ;
-        }
+        return (
 
-        return output;
+            <div>
+                <div style={styles.searchBox}>
+                    <div className="input-group">
+                        <span className="input-group-addon">
+                          <i className="fa fa-search"></i>
+                        </span>
+                        <input type="text"
+                               className="form-control"
+                               placeholder="Search the tree..."
+                               onKeyUp={this.onFilterMouseUp.bind(this)}
+                        />
+                    </div>
+                </div>
+                <div style={styles.component}>
+                    <Treebeard
+                        data={categories}
+                        onToggle={this.onToggle}
+                        decorators={decorators}
+                    />
+                </div>
+                <div style={styles.component}>
+                    <NodeViewer node={this.state.cursor}/>
+                </div>
+            </div>
+        );
+
     }
 }
 

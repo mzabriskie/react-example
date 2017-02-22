@@ -13,7 +13,7 @@ export default class Accounts extends Component {
         setTimeout(function () {
             if (cookie.load('access_token') == "" || cookie.load('access_token') === null|| cookie.load('access_token') === undefined) {
                 console.log("constractor " + cookie.load('access_token'));
-                window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002")
+                window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read+categories.read+transactions.write&redirect_uri=http://localhost:3002")
             }
         }, 0);
     }
@@ -99,6 +99,7 @@ export default class Accounts extends Component {
                     {/*}) }*/}
                     {/*<h2>{accounts[0].name}</h2>*/}
                     {this.accountsLoop()}
+                    <a href="/category">cat</a>
                     {/*<button className="btn btn-info" onClick={this.nextStep}>Next</button>*/}
                 </section>
             ;
