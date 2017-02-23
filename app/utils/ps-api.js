@@ -63,7 +63,7 @@ function getUserCategories(userId) {
 function refreshToken(xx) {
 
     var token_cookie = cookie.load('access_token');
-    if (token_cookie == "" || token_cookie == null) {
+    if (token_cookie == "" || token_cookie === null || token_cookie === undefined) {
         console.log(xx + token_cookie);
         // console.log("refresh " + token_cookie)
         window.open("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002", "login", "width=200,height=200,scrollbars=no");

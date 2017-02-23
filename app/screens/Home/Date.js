@@ -29,10 +29,13 @@ export default class Date extends Component {
         return <div>date<br/>
             <button onClick={this.props.previousStep}>Back
             </button>
+            <button onClick={this.props.nextStep}>Next
+            </button>
         </div>
     }
 }
 
 Date.propTypes = {
-    previousStep: PropTypes.func
+    previousStep: PropTypes.func,
+    nextStep: PropTypes.func
 };

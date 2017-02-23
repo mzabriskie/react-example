@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import cookie from "react-cookie";
+import ReactDOM from 'react-dom';
 import {StyleRoot} from 'radium';
-import {Treebeard, decorators} from 'react-treebeard';
+import {Treebeard, decorators}  from 'react-treebeard';
 
 import data from './data';
 import styles from './styles';
@@ -13,20 +14,30 @@ const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 // Example: Customising The Header Decorator To Include Icons
 decorators.Header = (props) => {
     const style = props.style;
-    // const iconType = props.node.children ? 'folder' : 'file-text';
-    const iconClass = `fa fa-location-arrow`;
+    const iconType = props.node.children ? 'folder' : 'file-text';
+    const iconClass = `fa fa-${iconType}`;
     const iconStyle = {marginRight: '5px'};
     return (
-        <div className="base" style={style.base}>
-            <div className="title" style={style.title}>
+        <div style={style.base}>
+            <div style={style.title}>
                 <i className={iconClass} style={iconStyle}/>
-                {props.node.title}
+                {props.node.name}
             </div>
         </div>
     );
 };
 
-class NodeViewer extends React.Component {
+decorators.Toggle = (props) => {
+    const style = props.style;
+
+    return (
+        <div style={style.toggle}>
+
+        </div>
+    );
+};
+
+class NodeViewer extends Component {
     constructor(props) {
         super(props);
     }
@@ -38,12 +49,13 @@ class NodeViewer extends React.Component {
             json = HELP_MSG;
         }
         return (
-            <div className="test" style={style.base}>
+            <div style={style.base}>
                 {json}
             </div>
         );
     }
 }
+
 
 NodeViewer.propTypes = {
     node: React.PropTypes.object
@@ -52,7 +64,7 @@ NodeViewer.propTypes = {
 export default class Category extends Component {
     constructor(props) {
         super(props);
-        this.state = {user: {}, categories: []}
+        this.state = {user: {}, categories: [], data: data}
         this.onToggle = this.onToggle.bind(this);
 
         setCookie();
@@ -107,12 +119,21 @@ export default class Category extends Component {
     onFilterMouseUp(e) {
         const filter = e.target.value.trim();
         if (!filter) {
-            return this.setState(categories);
+            return this.setState({data});
         }
-        var filtered = filters.filterTree(this.state.categories, filter);
+        var filtered = filters.filterTree(data, filter);
         filtered = filters.expandFilteredNodes(filtered, filter);
-        this.setState({categories: filtered});
+        this.setState({data: filtered});
+        console.log(filtered);
     }
+
+    // onFilterMouseUp(e){
+    //     const filter = e.target.value.trim();
+    //     if(!filter){ return this.setState({categories}); }
+    //     var filtered = filters.filterTree(this.state.categories, filter);
+    //     filtered = filters.expandFilteredNodes(filtered, filter);
+    //     this.setState({categories: filtered});
+    // }
 
     getUserCategoriesDate() {
         getUserCategories(cookie.load('user_id'))
@@ -132,11 +153,18 @@ export default class Category extends Component {
 
 
     render() {
-        const categories = this.state.categories;
+        // const style = props.style;
+        const categories = {
+            title: "categories",
+            toggled: true,
+            children: this.state.categories
+        }
 
+        // console.log(categories);
+        console.log(data)
+        // const style = styles.viewer;
         return (
-
-            <div>
+            <StyleRoot>
                 <div style={styles.searchBox}>
                     <div className="input-group">
                         <span className="input-group-addon">
@@ -145,21 +173,19 @@ export default class Category extends Component {
                         <input type="text"
                                className="form-control"
                                placeholder="Search the tree..."
-                               onKeyUp={this.onFilterMouseUp.bind(this)}
-                        />
+                               onKeyUp={this.onFilterMouseUp.bind(this)}/>
                     </div>
                 </div>
                 <div style={styles.component}>
                     <Treebeard
-                        data={categories}
+                        data={this.state.data}
                         onToggle={this.onToggle}
-                        decorators={decorators}
-                    />
+                        decorators={decorators}/>
                 </div>
                 <div style={styles.component}>
                     <NodeViewer node={this.state.cursor}/>
                 </div>
-            </div>
+            </StyleRoot>
         );
 
     }
