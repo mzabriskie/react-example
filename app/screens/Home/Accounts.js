@@ -7,7 +7,7 @@ export default class Accounts extends Component {
     constructor() {
         super();
         this.state = {user: {}, accounts: []}
-        this.nextStep = this.nextStep.bind(this);
+        // this.nextStep = this.nextStep.bind(this);
 
         setCookie();
         setTimeout(function () {
@@ -47,6 +47,7 @@ export default class Accounts extends Component {
     }
 
     componentWillMount() {
+
     }
 
     nextStep(id) {
@@ -65,11 +66,11 @@ export default class Accounts extends Component {
     accountsLoop() {
         return this.state.accounts.map(accounts => {
             var row = accounts.transaction_accounts.map(transAcc =>
-                <button onClick={this.nextStep(transAcc.id)} key={transAcc.id}>
+                <a onClick={() => { this.props.nextStep(transAcc.id) }} key={transAcc.id}>
                     {accounts.type}<br/>
                     {transAcc.name}<br/>
                     {transAcc.id}<br/><br/>
-                </button>);
+                </a>);
             return <div key={accounts.id}><br/>{row}</div>;
         });
     }
@@ -99,7 +100,7 @@ export default class Accounts extends Component {
                     {/*}) }*/}
                     {/*<h2>{accounts[0].name}</h2>*/}
                     {this.accountsLoop()}
-                    <a href="/category">cat</a>
+                    {/*<a href="/category">cat</a>*/}
                     {/*<button className="btn btn-info" onClick={this.nextStep}>Next</button>*/}
                 </section>
             ;
@@ -109,7 +110,7 @@ export default class Accounts extends Component {
     }
 }
 
-// Accounts.propTypes = {
-//     saveValues: PropTypes.function(),
-//     nextStep: PropTypes.function()
-// };
+Accounts.propTypes = {
+    saveValues: PropTypes.func,
+    nextStep: PropTypes.func
+};

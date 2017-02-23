@@ -50,9 +50,9 @@ export default class App extends Component {
 
     nextStep() {
         console.log(this.state.step);
-        // this.setState({
-        //     step: this.state.step + 1
-        // })
+        this.setState({
+            step: this.state.step + 1
+        })
         console.log(fieldValues);
     }
 
@@ -78,28 +78,28 @@ export default class App extends Component {
                                  saveValues={this.saveValues}/>
             case 2:
                 return <Date fieldValues={fieldValues}
-                             nextStep={this.nextStep}
-                             previousStep={this.previousStep}
+                             nextStep={this.nextStep.bind(this)}
+                             previousStep={this.previousStep.bind(this)}
                              saveValues={this.saveValues}/>
             case 3:
                 return <Category fieldValues={fieldValues}
-                                 nextStep={this.nextStep}
-                                 previousStep={this.previousStep}
+                                 nextStep={this.nextStep.bind(this)}
+                                 previousStep={this.previousStep.bind(this)}
                                  saveValues={this.saveValues}/>
             case 4:
                 return <Date fieldValues={fieldValues}
-                             nextStep={this.nextStep}
-                             previousStep={this.previousStep}
+                             nextStep={this.nextStep.bind(this)}
+                             previousStep={this.previousStep.bind(this)}
                              saveValues={this.saveValues}/>
             case 5:
                 return <Details fieldValues={fieldValues}
-                                nextStep={this.nextStep}
-                                previousStep={this.previousStep}
+                                nextStep={this.nextStep.bind(this)}
+                                previousStep={this.previousStep.bind(this)}
                                 saveValues={this.saveValues}/>
             case 6:
                 return <Amount fieldValues={fieldValues}
-                               submitRegistration={this.submitRegistration}
-                               previousStep={this.previousStep}
+                               submitRegistration={this.submitRegistration.bind(this)}
+                               previousStep={this.previousStep.bind(this)}
                                saveValues={this.saveValues}/>
             case 7:
                 return <Result fieldValues={fieldValues}/>
