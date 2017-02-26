@@ -26,6 +26,20 @@ module.exports = env => {
                 {test: /\.css$/, loader: 'style-loader!css-loader'},
                 {test: /\.scss$/, loaders: ['style', 'css', 'sass']},
                 {test: /(\.eot|\.woff2|\.woff|\.ttf|\.svg)/, loader: 'file-loader'},
+                {
+                    test: /\.(jpg|png)$/,
+                    loader: 'url-loader',
+                    options: {
+                        limit: 25000,
+                    },
+                },
+                {
+                    test: /\.(jpg|png)$/,
+                    loader: 'file-loader',
+                    options: {
+                        name: '[path][name].[hash].[ext]',
+                    },
+                },
             ],
         },
         plugins: removeEmpty([

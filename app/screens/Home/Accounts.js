@@ -1,16 +1,17 @@
 import React, {Component, PropTypes} from 'react';
+
 import cookie from "react-cookie";
+// import LogoImg from '../../../assets/img/logo.png';
+import {getUser, getUserAccounts, setCookie, refreshToken, getNewToken} from '../../utils/ps-api'
 
-import {getUser, getUserAccounts, setCookie, getNewToken} from '../../utils/ps-api'
 
-
-let token_cookie = cookie.load('access_token');
 export default class Accounts extends Component {
     constructor() {
         super();
         this.state = {user: {}, accounts: []}
         setCookie();
-        if (token_cookie == "" || token_cookie === null || token_cookie === undefined) {
+        let token_cookie = cookie.load('access_token');
+        if (token_cookie == "" || token_cookie == null || token_cookie == undefined) {
             getNewToken();
         }
     }
@@ -18,9 +19,9 @@ export default class Accounts extends Component {
     getUserData() {
         getUser()
             .then(({user}) => {
+                console.log(user);
                 this.setState({user});
                 cookie.save("user_id", user.id);
-                console.log(cookie.load('user_id'));
                 this.getUserAccountsData();
             });
     }
@@ -35,14 +36,12 @@ export default class Accounts extends Component {
 
 
     componentDidMount() {
+        let token_cookie = cookie.load('access_token');
         if (token_cookie != "" && token_cookie != null) {
             this.getUserData();
         }
     }
 
-    componentWillMount() {
-
-    }
 
     nextStep(id) {
         let data = {
@@ -51,7 +50,6 @@ export default class Accounts extends Component {
         console.log(data);
         this.props.saveValues(data)
         this.props.nextStep()
-
     }
 
     accountsLoop() {
@@ -68,23 +66,26 @@ export default class Accounts extends Component {
         });
     }
 
-
     render() {
         return <div className="container-fluid accounts">
             <div className="row">
                 <div className="col-xs-12">
-                    <div className="row">
-                        <div className="accounts-cont scroller">
-                            {this.accountsLoop()}
+                    <img className="home-logo" src="/assets/img/logo.png" />
+                        <div className="row">
+                            <div className="accounts-cont scroller">
+                                {this.accountsLoop()}
+                            </div>
                         </div>
-                    </div>
                 </div>
             </div>
-        </div>;
-    }
-}
 
-Accounts.propTypes = {
-    saveValues: PropTypes.func,
-    nextStep: PropTypes.func
-};
+        </div>
+    ;
+    }
+    }
+
+    Accounts
+    .propTypes = {
+        saveValues: PropTypes.func,
+        nextStep: PropTypes.func
+    };

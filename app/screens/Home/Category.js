@@ -58,7 +58,7 @@ class NodeViewer extends Component {
 NodeViewer.propTypes = {
     node: React.PropTypes.object
 };
-let token_cookie = cookie.load('access_token');
+
 
 export default class Category extends Component {
     constructor(props) {
@@ -87,6 +87,7 @@ export default class Category extends Component {
 
 
     componentDidMount() {
+        let token_cookie = cookie.load('access_token');
         if (token_cookie != "" && token_cookie != null) {
             this.getUserData();
         }
@@ -124,6 +125,7 @@ export default class Category extends Component {
     }
 
     componentDidMount() {
+        let token_cookie = cookie.load('access_token');
         if (token_cookie != "" && token_cookie != null) {
             this.getUserCategoriesDate();
         }

@@ -1,8 +1,17 @@
 @import "vars";
 
+.home-logo {
+  width: 170px;
+  display: block;
+  margin: 60px auto 110px auto;
+}
+
 .accounts {
   .accounts-cont {
-    max-height: 200px;
+    max-height: calc(100% - 310px);
     overflow: scroll;
+  }
+  .list-group-item {
+    border-radius: 0;
   }
 }
