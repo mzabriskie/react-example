@@ -5,7 +5,7 @@ export default {
         width: '50%',
         display: 'inline-block',
         verticalAlign: 'top',
-        background:'#fff',
+        background: '#fff',
         color: '#282C34',
         padding: '20px',
         '@media (maxWidth: 640px)': {
@@ -27,7 +27,7 @@ export default {
             minHeight: '250px'
         }
     },
-    toggle:{
+    toggle: {
         display: 'none'
     }
 };

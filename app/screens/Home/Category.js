@@ -1,17 +1,15 @@
 import React, {Component} from 'react';
 import cookie from "react-cookie";
-import ReactDOM from 'react-dom';
 import {StyleRoot} from 'radium';
 import {Treebeard, decorators}  from 'react-treebeard';
 
 import data from './data';
 import styles from './styles';
 import * as filters from './filter';
-import {getUserCategories, setCookie} from '../../utils/ps-api'
+import {getUserCategories} from '../../utils/ps-api'
 
 const HELP_MSG = 'Select A Node To See Its Data Structure Here...';
 
-// Example: Customising The Header Decorator To Include Icons
 decorators.Header = (props) => {
     const style = props.style;
     const iconType = props.node.children ? 'folder' : 'file-text';
@@ -60,21 +58,13 @@ class NodeViewer extends Component {
 NodeViewer.propTypes = {
     node: React.PropTypes.object
 };
+let token_cookie = cookie.load('access_token');
 
 export default class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {user: {}, categories: [], data: data}
         this.onToggle = this.onToggle.bind(this);
-
-        setCookie();
-        setTimeout(function () {
-            if (cookie.load('access_token') == "" || cookie.load('access_token') === null || cookie.load('access_token') === undefined) {
-                console.log("constractor " + cookie.load('access_token'));
-                window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read+categories.read+transactions.write&redirect_uri=http://localhost:3002")
-            }
-        }, 0);
-
     }
 
     getUserData() {
@@ -97,11 +87,8 @@ export default class Category extends Component {
 
 
     componentDidMount() {
-        if (cookie.load('access_token') != "" && cookie.load('access_token') != null) {
+        if (token_cookie != "" && token_cookie != null) {
             this.getUserData();
-            // console.log(cookie.load('user_id'));
-
-
         }
     }
 
@@ -127,13 +114,6 @@ export default class Category extends Component {
         console.log(filtered);
     }
 
-    // onFilterMouseUp(e){
-    //     const filter = e.target.value.trim();
-    //     if(!filter){ return this.setState({categories}); }
-    //     var filtered = filters.filterTree(this.state.categories, filter);
-    //     filtered = filters.expandFilteredNodes(filtered, filter);
-    //     this.setState({categories: filtered});
-    // }
 
     getUserCategoriesDate() {
         getUserCategories(cookie.load('user_id'))
@@ -144,16 +124,13 @@ export default class Category extends Component {
     }
 
     componentDidMount() {
-        if (cookie.load('access_token') != "" && cookie.load('access_token') != null) {
+        if (token_cookie != "" && token_cookie != null) {
             this.getUserCategoriesDate();
-            // console.log(cookie.load('user_id'));
         }
-
     }
 
 
     render() {
-        // const style = props.style;
         const categories = {
             title: "categories",
             toggled: true,
@@ -162,7 +139,6 @@ export default class Category extends Component {
 
         // console.log(categories);
         console.log(data)
-        // const style = styles.viewer;
         return (
             <StyleRoot>
                 <div style={styles.searchBox}>

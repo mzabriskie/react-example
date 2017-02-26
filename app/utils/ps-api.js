@@ -2,11 +2,11 @@ import axios from 'axios';
 import cookie from "react-cookie";
 
 const BASE_URL = 'https://api.pocketsmith.com/v2';
+let token_cookie = cookie.load('access_token');
 
-export {getUser, getUserAccounts, getUserCategories, refreshToken, getNewToken, setCookie};
+export {getUser, getUserAccounts, getUserCategories, getNewToken, setCookie};
 
 function setCookie() {
-    console.log(cookie.load('access_token'))
     if (window.location.hash != "" && window.location.hash != null) {
         var hash = window.location.hash;
         // console.log("xx" + hash);
@@ -17,16 +17,16 @@ function setCookie() {
         console.log(exprDuration);
         cookie.save("access_token", access_token, {expires: exprDuration});
     }
-    // console.log(cookie.load('access_token'))
 }
 
+function getNewToken() {
+    window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read+categories.read+transactions.write&redirect_uri=http://localhost:3002")
+}
 
 function getUser() {
-    refreshToken("user");
-
     return axios.get(`${BASE_URL}/me`, {
         headers: {
-            Authorization: "Bearer " + cookie.load('access_token')
+            Authorization: "Bearer " + token_cookie
         }
     }).then((users) => ({user: users.data}))
         .catch(function (error) {
@@ -39,11 +39,9 @@ function getUser() {
 }
 
 function getUserAccounts(userId) {
-    refreshToken("accounts");
-
     return axios.get(`${BASE_URL}/users/${userId}/accounts`, {
         headers: {
-            Authorization: "Bearer " + cookie.load('access_token')
+            Authorization: "Bearer " + token_cookie
         }
     }).then((userAccounts) => ({accounts: userAccounts.data}))
         .catch(function (error) {
@@ -56,11 +54,9 @@ function getUserAccounts(userId) {
 }
 
 function getUserCategories(userId) {
-    refreshToken("categories");
-
     return axios.get(`${BASE_URL}/users/${userId}/categories`, {
         headers: {
-            Authorization: "Bearer " + cookie.load('access_token')
+            Authorization: "Bearer " + token_cookie
         }
     }).then((userCategory) => ({categories: userCategory.data}))
         .catch(function (error) {
@@ -70,18 +66,4 @@ function getUserCategories(userId) {
                 }
             }
         });
-}
-
-function refreshToken(xx) {
-
-    var token_cookie = cookie.load('access_token');
-    if (token_cookie == "" || token_cookie === null || token_cookie === undefined) {
-        console.log(xx + token_cookie);
-        // console.log("refresh " + token_cookie)
-        window.open("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002", "login", "width=200,height=200,scrollbars=no");
-    }
-}
-
-function getNewToken() {
-    window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read+categories.read+transactions.write&redirect_uri=http://localhost:3002")
 }

@@ -1,19 +1,16 @@
 import React, {Component, PropTypes} from 'react';
 import cookie from "react-cookie";
-import ReactScrollbar from 'react-scrollbar-js';
 
 import {getUser, getUserAccounts, setCookie, getNewToken} from '../../utils/ps-api'
 
 
+let token_cookie = cookie.load('access_token');
 export default class Accounts extends Component {
     constructor() {
         super();
         this.state = {user: {}, accounts: []}
-        // this.nextStep = this.nextStep.bind(this);
-
         setCookie();
-        if (cookie.load('access_token') == "" || cookie.load('access_token') === null || cookie.load('access_token') === undefined) {
-            console.log("constractor " + cookie.load('access_token'));
+        if (token_cookie == "" || token_cookie === null || token_cookie === undefined) {
             getNewToken();
         }
     }
@@ -38,11 +35,8 @@ export default class Accounts extends Component {
 
 
     componentDidMount() {
-        if (cookie.load('access_token') != "" && cookie.load('access_token') != null) {
+        if (token_cookie != "" && token_cookie != null) {
             this.getUserData();
-            // console.log(cookie.load('user_id'));
-
-
         }
     }
 
@@ -51,9 +45,6 @@ export default class Accounts extends Component {
     }
 
     nextStep(id) {
-        // e.preventDefault()
-
-        // Get values via this.refs
         let data = {
             accountId: id
         }
@@ -79,9 +70,6 @@ export default class Accounts extends Component {
 
 
     render() {
-
-        const user = this.state.user;
-
         return <div className="container-fluid accounts">
             <div className="row">
                 <div className="col-xs-12">
@@ -92,35 +80,7 @@ export default class Accounts extends Component {
                     </div>
                 </div>
             </div>
-        </div>
-
-            ;
-        // if (accounts.length != 0) {
-        //     // console.log(accounts.length);
-        //
-        //     output =
-        //         <section className="container home">
-        //             {/*<a href="https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002">login</a>*/}
-        //             {/*<a className="{ ? 'hide' : 'show' }"*/}
-        //             {/*href="https://my.pocketsmith.com/logout?redirect_uri=http://localhost:3002">logout</a>*/}
-        //             <h2>{user.name}</h2>
-        //             {/*{this.state.accounts.map(*/}
-        //             {/*(item) => {*/}
-        //             {/*return <div key={item.id}>*/}
-        //             {/*{item.type}*/}
-        //             {/*{ transaccount = item.transaction_accounts.map((acc)=>  <div key={acc.id}>{acc.name} </div>)}*/}
-        //             {/*{return transaccount}*/}
-        //             {/*</div>*/}
-        //             {/*}) }*/}
-        //             {/*<h2>{accounts[0].name}</h2>*/}
-        //             {this.accountsLoop()}
-        //             {/*<a href="/category">cat</a>*/}
-        //             {/*<button className="btn btn-info" onClick={this.nextStep}>Next</button>*/}
-        //         </section>
-        //     ;
-        // }
-        //
-        // return output;
+        </div>;
     }
 }
 

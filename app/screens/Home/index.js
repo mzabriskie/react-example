@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import cookie from 'react-cookie'
 import assign from 'object-assign'
 import Accounts from './Accounts'
 import Date from './Date'
@@ -8,7 +7,6 @@ import Details from './Details'
 import Amount from './Amount'
 import Result from './Result'
 
-import {setCookie} from '../../utils/ps-api'
 
 
 let fieldValues = {
@@ -25,20 +23,6 @@ export default class App extends Component {
     constructor() {
         super()
         this.state = {step: 1}
-
-        // console.log(cookie.load('access_token'));
-        // if (cookie.load('access_token') == "" || cookie.load('access_token') == null) {
-        //     console.log("constractor " + cookie.load('access_token'));
-        //     window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002")
-        // }
-        // setCookie();
-        //
-        // setTimeout(function () {
-        //     if (cookie.load('access_token') == "" || cookie.load('access_token') == null) {
-        //         console.log("constractor " + cookie.load('access_token'));
-        //         window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002")
-        //     }
-        // }, 0);
     }
 
     saveValues(field_value) {
