@@ -3,7 +3,7 @@ import cookie from "react-cookie";
 
 const BASE_URL = 'https://api.pocketsmith.com/v2';
 
-export {getUser, getUserAccounts, getUserCategories, refreshToken, setCookie};
+export {getUser, getUserAccounts, getUserCategories, refreshToken, getNewToken, setCookie};
 
 function setCookie() {
     console.log(cookie.load('access_token'))
@@ -30,7 +30,11 @@ function getUser() {
         }
     }).then((users) => ({user: users.data}))
         .catch(function (error) {
-            console.log(error);
+            if (error.response) {
+                if (error.response.status == 401) {
+                    getNewToken()
+                }
+            }
         });
 }
 
@@ -43,7 +47,11 @@ function getUserAccounts(userId) {
         }
     }).then((userAccounts) => ({accounts: userAccounts.data}))
         .catch(function (error) {
-            console.log(error);
+            if (error.response) {
+                if (error.response.status == 401) {
+                    getNewToken()
+                }
+            }
         });
 }
 
@@ -56,7 +64,11 @@ function getUserCategories(userId) {
         }
     }).then((userCategory) => ({categories: userCategory.data}))
         .catch(function (error) {
-            console.log(error);
+            if (error.response) {
+                if (error.response.status == 401) {
+                    getNewToken()
+                }
+            }
         });
 }
 
@@ -68,4 +80,8 @@ function refreshToken(xx) {
         // console.log("refresh " + token_cookie)
         window.open("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002", "login", "width=200,height=200,scrollbars=no");
     }
+}
+
+function getNewToken() {
+    window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read+categories.read+transactions.write&redirect_uri=http://localhost:3002")
 }

@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import cookie from "react-cookie";
-import {getUser, getUserAccounts, setCookie} from '../../utils/ps-api'
+import ReactScrollbar from 'react-scrollbar-js';
+
+import {getUser, getUserAccounts, setCookie, getNewToken} from '../../utils/ps-api'
 
 
 export default class Accounts extends Component {
@@ -10,12 +12,10 @@ export default class Accounts extends Component {
         // this.nextStep = this.nextStep.bind(this);
 
         setCookie();
-        setTimeout(function () {
-            if (cookie.load('access_token') == "" || cookie.load('access_token') === null|| cookie.load('access_token') === undefined) {
-                console.log("constractor " + cookie.load('access_token'));
-                window.location.replace("https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read+categories.read+transactions.write&redirect_uri=http://localhost:3002")
-            }
-        }, 0);
+        if (cookie.load('access_token') == "" || cookie.load('access_token') === null || cookie.load('access_token') === undefined) {
+            console.log("constractor " + cookie.load('access_token'));
+            getNewToken();
+        }
     }
 
     getUserData() {
@@ -66,47 +66,61 @@ export default class Accounts extends Component {
     accountsLoop() {
         return this.state.accounts.map(accounts => {
             var row = accounts.transaction_accounts.map(transAcc =>
-                <a onClick={() => { this.props.nextStep(transAcc.id) }} key={transAcc.id}>
+                <li className={"list-group-item " + (accounts.type == "bank" ? 'bank' : '')} onClick={() => {
+                    this.props.nextStep(transAcc.id)
+                }} key={transAcc.id}>
                     {accounts.type}<br/>
                     {transAcc.name}<br/>
-                    {transAcc.id}<br/><br/>
-                </a>);
-            return <div key={accounts.id}><br/>{row}</div>;
+                    {transAcc.id}
+                </li>);
+            return <ul className="list-group" key={accounts.id}>{row}</ul>;
         });
     }
 
 
     render() {
-        var output = null;
+
         const user = this.state.user;
-        console.log(user);
-        const accounts = this.state.accounts;
-        if (accounts.length != 0) {
-            // console.log(accounts.length);
 
-            output =
-                <section className="container home">
-                    {/*<a href="https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002">login</a>*/}
-                    {/*<a className="{ ? 'hide' : 'show' }"*/}
-                    {/*href="https://my.pocketsmith.com/logout?redirect_uri=http://localhost:3002">logout</a>*/}
-                    <h2>{user.name}</h2>
-                    {/*{this.state.accounts.map(*/}
-                    {/*(item) => {*/}
-                    {/*return <div key={item.id}>*/}
-                    {/*{item.type}*/}
-                    {/*{ transaccount = item.transaction_accounts.map((acc)=>  <div key={acc.id}>{acc.name} </div>)}*/}
-                    {/*{return transaccount}*/}
-                    {/*</div>*/}
-                    {/*}) }*/}
-                    {/*<h2>{accounts[0].name}</h2>*/}
-                    {this.accountsLoop()}
-                    {/*<a href="/category">cat</a>*/}
-                    {/*<button className="btn btn-info" onClick={this.nextStep}>Next</button>*/}
-                </section>
+        return <div className="container-fluid accounts">
+            <div className="row">
+                <div className="col-xs-12">
+                    <div className="row">
+                        <div className="accounts-cont scroller">
+                            {this.accountsLoop()}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
             ;
-        }
-
-        return output;
+        // if (accounts.length != 0) {
+        //     // console.log(accounts.length);
+        //
+        //     output =
+        //         <section className="container home">
+        //             {/*<a href="https://my.pocketsmith.com/oauth/authorize?client_id=6&response_type=token&scope=user.read+user.write+accounts.read&redirect_uri=http://localhost:3002">login</a>*/}
+        //             {/*<a className="{ ? 'hide' : 'show' }"*/}
+        //             {/*href="https://my.pocketsmith.com/logout?redirect_uri=http://localhost:3002">logout</a>*/}
+        //             <h2>{user.name}</h2>
+        //             {/*{this.state.accounts.map(*/}
+        //             {/*(item) => {*/}
+        //             {/*return <div key={item.id}>*/}
+        //             {/*{item.type}*/}
+        //             {/*{ transaccount = item.transaction_accounts.map((acc)=>  <div key={acc.id}>{acc.name} </div>)}*/}
+        //             {/*{return transaccount}*/}
+        //             {/*</div>*/}
+        //             {/*}) }*/}
+        //             {/*<h2>{accounts[0].name}</h2>*/}
+        //             {this.accountsLoop()}
+        //             {/*<a href="/category">cat</a>*/}
+        //             {/*<button className="btn btn-info" onClick={this.nextStep}>Next</button>*/}
+        //         </section>
+        //     ;
+        // }
+        //
+        // return output;
     }
 }
 

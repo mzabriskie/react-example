@@ -24,7 +24,7 @@ let fieldValues = {
 export default class App extends Component {
     constructor() {
         super()
-        this.state = {step: 3}
+        this.state = {step: 1}
 
         // console.log(cookie.load('access_token'));
         // if (cookie.load('access_token') == "" || cookie.load('access_token') == null) {
