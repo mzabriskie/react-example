@@ -13,7 +13,7 @@ function setCookie() {
         var res = hash.split("&");
         var access_token = /=(.+)/.exec(res[0])[1];
         // console.log(hash);
-        var exprDuration = new Date(new Date().getTime() + 10 * 1000);
+        var exprDuration = new Date(new Date().getTime() + 3000 * 1000);
         console.log(exprDuration);
         cookie.save("access_token", access_token, {expires: exprDuration});
 
