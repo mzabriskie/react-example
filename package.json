@@ -1,7 +1,7 @@
 {
-  "name": "react-example",
+  "name": "Elastic_Front",
   "version": "1.0.0",
-  "description": "Simple React example app",
+  "description": "Front-end part of my dimploma project. Elasticsearch web interface for index crystal.",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --content-base ./ --env.dev",
@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mzabriskie/react-example"
+    "url": "https://github.com/JacksonGibsonESP/Elastic_Front"
   },
-  "author": "Matt Zabriskie",
+  "author": "Matt Zabriskie, Nikita Zaytsev",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mzabriskie/react-example/issues"
+    "url": "https://github.com/JacksonGibsonESP/Elastic_Front/issues"
   },
-  "homepage": "https://github.com/mzabriskie/react-example",
+  "homepage": "https://github.com/JacksonGibsonESP/Elastic_Front",
   "dependencies": {
     "axios": "0.13.1",
     "bootstrap": "^3.3.5",

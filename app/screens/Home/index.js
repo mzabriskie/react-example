@@ -18,7 +18,7 @@ export default class Home extends Component {
             <div className="input-group">
               <input
                 type="text"
-                placeholder="Enter a GitHub user..."
+                placeholder="Enter a query"
                 className="form-control"
                 ref={ref => (this._input = ref)}
               />
