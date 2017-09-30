@@ -10,11 +10,18 @@ export {getArticles};
 * http.cors.allow-origin : "*"
 * */
 
-function getArticles(query) {
+function getArticles(query, size, from) {
     return axios.post(BASE_URL, {
             "query": {
                 "match": { "attachment.content": query }
             },
-            "_source": ["_id"]
-        }).then(response => response.data.hits.hits);
+            "_source": ["_id"],
+            "size": size,
+            "from": from,
+            "highlight": {
+                "fields": {
+                    "attachment.content": {"type": "plain"}
+                }
+            }
+        }).then(response => response.data.hits);
 }

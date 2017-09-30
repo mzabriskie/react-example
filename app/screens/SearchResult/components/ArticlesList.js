@@ -5,32 +5,48 @@ import {getArticles} from '../../../utils/elastic-api'
 export default class ArticlesList extends Component {
   constructor() {
     super()
-    this.state = {articles: []}
+    this.state = {
+      articles: [],
+      hits: 0,
+    }
   }
 
   getArticles() {
       const {query} = this.props
-      this.props.getArticles(query).then(articles => {
-          this.setState({articles});
+      const {pageNumber} = this.props
+      this.props.getArticles(query, 4, pageNumber * 4).then(articles => {
+          this.setState({
+            articles: articles.hits,
+            hits: articles.total
+          });
       });
   }
 
   componentWillMount() {
-      this.getArticles();
+    this.getArticles();
+  }
+
+  componentWillUpdate(){
+    this.getArticles();
   }
 
   render() {
     const {articles} = this.state
+    const {hits} = this.state
     return (
-      <ul className="list-unstyled">
-        {renderArticles(articles)}
-      </ul>
+      <div>
+        <h4>Hits: {hits}</h4>
+        <ul className="list-unstyled">
+          {renderArticles(articles)}
+        </ul>
+      </div>
     );
   }
 }
 
 ArticlesList.propTypes = {
   query: PropTypes.string.isRequired,
+  pageNumber: PropTypes.number.isRequired,
   getArticles: PropTypes.func,
 };
 ArticlesList.defaultProps = {getArticles}
