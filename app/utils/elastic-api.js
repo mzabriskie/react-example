@@ -4,12 +4,6 @@ const BASE_URL = 'http://localhost:9200/crystal/_search';
 
 export {getArticles};
 
-/*
-* Write this in elastic config:
-* http.cors.enabled : true
-* http.cors.allow-origin : "*"
-* */
-
 function getArticles(query, size, from) {
     return axios.post(BASE_URL, {
             "query": {
@@ -19,6 +13,8 @@ function getArticles(query, size, from) {
             "size": size,
             "from": from,
             "highlight": {
+                "pre_tags" : ["<mark>"],
+                "post_tags" : ["</mark>"],
                 "fields": {
                     "attachment.content": {"type": "plain"}
                 }

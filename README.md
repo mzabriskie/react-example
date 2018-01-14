@@ -10,6 +10,12 @@ Requirements:
 - Node v6
 - npm v3
 
+Write this in Elasticsearch config file:
+```
+http.cors.enabled : true
+http.cors.allow-origin : "*"
+```
+
 To run the app locally:
 
 ```bash
