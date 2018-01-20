@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:9200/crystal/_search';
-const PROXY_URL = 'http://localhost:8080/api/getContentById'
+const PROXY_URL_CONTENT = 'http://localhost:8080/api/getContentById';
+const PROXY_URL_FILE = 'http://localhost:8080/api/getFileById';
 
-export {getArticles, getContent};
+export {getArticles, getContent, getFile};
 
 function getArticles(query, size, from) {
     return axios.post(BASE_URL, {
@@ -24,9 +25,17 @@ function getArticles(query, size, from) {
 }
 
 function getContent(id) {
-  return axios.get(PROXY_URL, {
+  return axios.get(PROXY_URL_CONTENT, {
     params: {
       Id: id
     }
   }).then(response => response.data.content);
+}
+
+function getFile(id) {
+  return axios.get(PROXY_URL_FILE, {
+    params: {
+      Id: id
+    }
+  })
 }
