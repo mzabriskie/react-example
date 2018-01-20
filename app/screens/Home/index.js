@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 export default class Home extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
-    this.context.router.push({pathname: `/${this._input.value}`});
+    this.context.router.push({pathname: `/search/${this._input.value}`});
   };
 
   render() {
