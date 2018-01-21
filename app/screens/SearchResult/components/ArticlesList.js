@@ -4,16 +4,16 @@ import {getArticles} from '../../../utils/elastic-api'
 
 export default class ArticlesList extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       articles: [],
       hits: 0,
     }
   }
 
-  getArticles() {
-      const {query} = this.props
-      const {pageNumber} = this.props
+  getArticles(props) {
+      const {query} = props;
+      const {pageNumber} = props;
       this.props.getArticles(query, 4, pageNumber * 4).then(articles => {
           this.setState({
             articles: articles.hits,
@@ -23,16 +23,16 @@ export default class ArticlesList extends Component {
   }
 
   componentWillMount() {
-    this.getArticles();
+    this.getArticles(this.props);
   }
 
-  componentWillUpdate(){
-    this.getArticles();
+  componentWillReceiveProps(nextProps){
+    this.getArticles(nextProps);
   }
 
   render() {
-    const {articles} = this.state
-    const {hits} = this.state
+    const {articles} = this.state;
+    const {hits} = this.state;
     return (
       <div>
         <h4>Hits: {hits}</h4>
@@ -49,7 +49,8 @@ ArticlesList.propTypes = {
   pageNumber: PropTypes.number.isRequired,
   getArticles: PropTypes.func,
 };
-ArticlesList.defaultProps = {getArticles}
+
+ArticlesList.defaultProps = {getArticles};
 
 function renderArticles(articles) {
   return articles

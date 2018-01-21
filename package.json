@@ -28,10 +28,10 @@
     "bootstrap": "^3.3.5",
     "history": "^3.0.0",
     "moment": "^2.10.6",
-    "react": "16.2.0",
-    "react-dom": "16.2.0",
-    "react-router": "4.2.0",
-    "react-tooltip": "3.4.0"
+    "react": "15.3.0",
+    "react-dom": "15.3.0",
+    "react-router": "2.6.1",
+    "react-tooltip": "3.1.5"
   },
   "devDependencies": {
     "babel-core": "6.13.2",

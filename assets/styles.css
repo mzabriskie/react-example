@@ -51,3 +51,9 @@ section.orgs img {
 	width: 42px;
 	height: 42px;
 }
+
+mark, .mark {
+	background-color: #00A69B;
+	color: #FFF;
+	padding: 1px 5px;
+}

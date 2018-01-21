@@ -5,33 +5,33 @@ import PagesBar from "./components/PagesBar";
 export default class SearchResult extends Component {
 
   constructor() {
-    super()
-    this.state = {currentPage: 0}
-    this.incrementPage = this.incrementPage.bind(this)
+    super();
+    this.state = {currentPage: 0};
+    this.incrementPage = this.incrementPage.bind(this);
     this.decrementPage = this.decrementPage.bind(this)
   }
 
   incrementPage(e){
-    e.preventDefault()
-    this.setState({
-      currentPage: ++this.state.currentPage
-    })
-    this.forceUpdate()
+    e.preventDefault();
+    this.setState(function(prevState) {
+      return {
+        currentPage: prevState.currentPage + 1
+      }
+    });
   }
 
   decrementPage(e){
-    e.preventDefault()
-    if (this.state.currentPage > 0) {
-      this.setState({
-        currentPage: --this.state.currentPage
-      })
-      this.forceUpdate()
-    }
+    e.preventDefault();
+    this.setState(function(prevState) {
+      return {
+        currentPage: prevState.currentPage > 0 ? prevState.currentPage - 1 : prevState.currentPage
+      }
+    });
   }
 
   render() {
-    const {query} = this.props.params
-    const {currentPage} = this.state
+    const {query} = this.props.params;
+    const {currentPage} = this.state;
     return (
       <div className="container">
         <div className="row">
@@ -50,4 +50,4 @@ SearchResult.propTypes = {
   params: PropTypes.shape({
     query: PropTypes.string,
   }),
-}
+};

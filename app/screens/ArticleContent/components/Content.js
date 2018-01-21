@@ -23,10 +23,6 @@ export default class Content extends Component {
     this.getContent();
   }
 
-  componentWillUpdate(){
-    this.getContent();
-  }
-
   render() {
     const {content} = this.state
     return (
