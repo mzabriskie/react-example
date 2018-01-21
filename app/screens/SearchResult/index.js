@@ -3,6 +3,10 @@ import ArticlesList from './components/ArticlesList'
 import PagesBar from "./components/PagesBar";
 
 export default class SearchResult extends Component {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.context.router.push({pathname: `/search/${this._input.value}`});
+  };
 
   constructor() {
     super();
@@ -33,15 +37,39 @@ export default class SearchResult extends Component {
     const {query} = this.props.params;
     const {currentPage} = this.state;
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-12">
-            <h3>Articles</h3>
-            <ArticlesList query={query} pageNumber={currentPage} />
+      <section className="container">
+        <form
+          className="form-inline"
+          role="form"
+          onSubmit={this.handleSubmit}
+        >
+          <div className="form-group">
+            <div className="container">
+              <div className="row">
+                <div className="col-sm-12">
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      placeholder="Enter a query"
+                      className="form-control"
+                      ref={ref => (this._input = ref)}
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary">
+                    Go
+                  </button>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-sm-12">
+                  <ArticlesList query={query} pageNumber={currentPage} />
+                </div>
+              </div>
+              <PagesBar decrementPage={this.decrementPage} incrementPage={this.incrementPage} />
+            </div>
           </div>
-        </div>
-        <PagesBar decrementPage={this.decrementPage} incrementPage={this.incrementPage} />
-      </div>
+        </form>
+      </section>
     );
   }
 }
@@ -50,4 +78,8 @@ SearchResult.propTypes = {
   params: PropTypes.shape({
     query: PropTypes.string,
   }),
+};
+
+SearchResult.contextTypes = {
+  router: React.PropTypes.object.isRequired,
 };
