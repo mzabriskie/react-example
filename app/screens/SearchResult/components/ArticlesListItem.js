@@ -7,7 +7,7 @@ function ArticlesListItem({article}) {
   return (
     <li className="border-bottom">
       <h4>{article._id}</h4>
-      <HighlightsList highlights={article.highlight["attachment.content"]} />
+      <HighlightsList highlights={article.highlights} />
     </li>
   );
 }

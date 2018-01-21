@@ -3,7 +3,7 @@ import HighlightsListItem from './HighlightsListItem';
 
 export default class HighlightsList extends Component {
   constructor() {
-    super()
+    super();
     this.state = {highlights: []}
   }
 

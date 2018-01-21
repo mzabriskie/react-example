@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ArticlesListItem from './ArticlesListItem';
-import {getArticles} from '../../../utils/elastic-api'
+import {getArticles} from '../../../utils/proxy-api'
 
 export default class ArticlesList extends Component {
   constructor() {
@@ -14,10 +14,10 @@ export default class ArticlesList extends Component {
   getArticles(props) {
       const {query} = props;
       const {pageNumber} = props;
-      this.props.getArticles(query, 4, pageNumber * 4).then(articles => {
+      this.props.getArticles(query, null, null, null, null, null, pageNumber * 4, 4).then(articles => {
           this.setState({
-            articles: articles.hits,
-            hits: articles.total
+            articles: articles.rows,
+            hits: articles.totalHits
           });
       });
   }
