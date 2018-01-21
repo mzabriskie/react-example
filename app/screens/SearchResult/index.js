@@ -38,36 +38,28 @@ export default class SearchResult extends Component {
     const {currentPage} = this.state;
     return (
       <section className="container">
-        <form
-          className="form-inline"
-          role="form"
-          onSubmit={this.handleSubmit}
-        >
-          <div className="form-group">
-            <div className="container">
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      placeholder="Enter a query"
-                      className="form-control"
-                      ref={ref => (this._input = ref)}
-                    />
-                  </div>
-                  <button type="submit" className="btn btn-primary">
-                    Go
-                  </button>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-sm-12">
-                  <ArticlesList query={query} pageNumber={currentPage} />
-                </div>
-              </div>
-              <PagesBar decrementPage={this.decrementPage} incrementPage={this.incrementPage} />
+        <form onSubmit={this.handleSubmit}>
+          <div className="row">
+            <div className="col-sm-11">
+              <input
+                type="text"
+                placeholder="Enter a query"
+                className="form-control"
+                ref={ref => (this._input = ref)}
+              />
+            </div>
+            <div className="col-sm-1">
+              <button type="submit" className="btn btn-primary">
+                Go
+              </button>
             </div>
           </div>
+          <div className="row">
+            <div className="col-sm-12">
+              <ArticlesList query={query} pageNumber={currentPage} />
+            </div>
+          </div>
+          <PagesBar decrementPage={this.decrementPage} incrementPage={this.incrementPage} />
         </form>
       </section>
     );

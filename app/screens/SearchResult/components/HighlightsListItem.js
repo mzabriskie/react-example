@@ -5,9 +5,7 @@ export default HighlightsListItem;
 function HighlightsListItem({highlight}) {
   return (
     <li>
-      <h6>
-        <div className="content" dangerouslySetInnerHTML={{__html: highlight}} />
-      </h6>
+      <div className="content" dangerouslySetInnerHTML={{__html: highlight}} />
     </li>
   );
 }
