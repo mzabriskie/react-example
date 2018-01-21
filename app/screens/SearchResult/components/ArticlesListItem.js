@@ -6,7 +6,7 @@ export default ArticlesListItem;
 function ArticlesListItem({article}) {
   return (
     <li className="border-bottom">
-      <h4>{article._id}</h4>
+      <h4><a href={`/content/${article._id}`}>{article._id}</a></h4>
       <HighlightsList highlights={article.highlights} />
     </li>
   );
