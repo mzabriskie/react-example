@@ -26,10 +26,10 @@ export default class Content extends Component {
   render() {
     const {content} = this.state
     return (
-      <div>
+      <p>
         {content}
-      </div>
-    );
+      </p>
+    )
   }
 }
 

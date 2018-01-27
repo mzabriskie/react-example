@@ -60,3 +60,7 @@ mark, .mark {
 	color: #FFF;
 	padding: 1px 5px;
 }
+
+p {
+	white-space: pre-line;
+}
