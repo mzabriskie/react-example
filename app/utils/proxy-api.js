@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const PROXY_URL_SEARCH = 'http://localhost:8080/api/search';
-const PROXY_URL_CONTENT = 'http://localhost:8080/api/getContentById';
-export const PROXY_URL_FILE = 'http://localhost:8080/api/getFileById';
+const PROXY_URL_SEARCH = 'http://pmoproject.ru:8080/api/search';
+const PROXY_URL_CONTENT = 'http://pmoproject.ru:8080/api/getContentById';
+export const PROXY_URL_FILE = 'http://pmoproject.ru:8080/api/getFileById';
 
 export {getArticles, getContent};
 
