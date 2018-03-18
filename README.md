@@ -10,12 +10,6 @@ Requirements:
 - Node v6
 - npm v3
 
-Write this in Elasticsearch config file:
-```
-http.cors.enabled : true
-http.cors.allow-origin : "*"
-```
-
 To run the app locally:
 
 ```bash
@@ -23,7 +17,7 @@ git clone https://github.com/JacksonGibsonESP/Elastic_Front.git
 cd Elastic_Front
 npm run setup
 npm run dev
-open http://localhost:8080
+open http://localhost:8070
 ```
 
 [React]: http://facebook.github.io/react/

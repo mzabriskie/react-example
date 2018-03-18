@@ -4,7 +4,7 @@
   "description": "Front-end part of my dimploma project. Elasticsearch web interface for index crystal.",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline --content-base ./ --env.dev",
+    "dev": "webpack-dev-server --inline --content-base ./ --env.dev --host 0.0.0.0",
     "build": "webpack --env.prod",
     "lint": "eslint app test",
     "test": "cross-env NODE_ENV=test nyc mocha",
