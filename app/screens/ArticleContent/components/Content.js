@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {getContent} from '../../../utils/proxy-api'
+import {getContent} from '../../../api/proxy-api'
 
 export default class Content extends Component {
 

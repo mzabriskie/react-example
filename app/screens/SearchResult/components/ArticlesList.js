@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ArticlesListItem from './ArticlesListItem';
-import {getArticles} from '../../../utils/proxy-api'
+import {getArticles} from '../../../api/proxy-api'
 
 export default class ArticlesList extends Component {
   constructor() {

@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import Content from './components/Content'
-import {PROXY_URL_FILE} from "../../utils/proxy-api";
+import {PROXY_URL_FILE} from "../../api/proxy-api";
 
 export default class ArticleContent extends Component {
 
