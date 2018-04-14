@@ -58,7 +58,7 @@ export default class ArticlesList extends Component {
 }
 
 ArticlesList.propTypes = {
-    query: PropTypes.string.isRequired,
+    query: PropTypes.string,
     chemicalElement: PropTypes.string,
     chemicalFormula: PropTypes.string,
     crystalSystem: PropTypes.string,

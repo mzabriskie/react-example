@@ -5,8 +5,15 @@ import PagesBar from "./components/PagesBar";
 export default class SearchResult extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
-        this.context.router.push({
-            pathname: `/search/${this._query.value}`
+        this.setState(function (prevState) {
+            return {
+                query: this._query.value,
+                chemicalElement: this._chemicalElement.value,
+                chemicalFormula: this._chemicalFormula.value,
+                crystalSystem: this._crystalSystem.value,
+                radiusType: this._radiusType.value,
+                spaceGroup: this._spaceGroup.value,
+            }
         });
     };
 
@@ -36,12 +43,12 @@ export default class SearchResult extends Component {
     }
 
     render() {
-        const {query} = this.props.params;
-        const {chemicalElement} = this.props.params;
-        const {chemicalFormula} = this.props.params;
-        const {crystalSystem} = this.props.params;
-        const {radiusType} = this.props.params;
-        const {spaceGroup} = this.props.params;
+        const {query} = this.state;
+        const {chemicalElement} = this.state;
+        const {chemicalFormula} = this.state;
+        const {crystalSystem} = this.state;
+        const {radiusType} = this.state;
+        const {spaceGroup} = this.state;
         const {currentPage} = this.state;
         return (
             <section className="container">
@@ -61,7 +68,6 @@ export default class SearchResult extends Component {
                                     type="text"
                                     placeholder="Type Chemical Element"
                                     className="form-control"
-                                    defaultValue={chemicalElement}
                                     ref={ref => (this._chemicalElement = ref)}
                                 />
                             </div>
@@ -82,7 +88,6 @@ export default class SearchResult extends Component {
                                     type="text"
                                     placeholder="Type Crystal System"
                                     className="form-control"
-                                    defaultValue={crystalSystem}
                                     ref={ref => (this._crystalSystem = ref)}
                                 />
                             </div>
@@ -131,18 +136,3 @@ export default class SearchResult extends Component {
         );
     }
 }
-
-SearchResult.propTypes = {
-    params: PropTypes.shape({
-        query: PropTypes.string,
-        chemicalElement: PropTypes.string,
-        chemicalFormula: PropTypes.string,
-        crystalSystem: PropTypes.string,
-        radiusType: PropTypes.string,
-        spaceGroup: PropTypes.string,
-    }),
-};
-
-SearchResult.contextTypes = {
-    router: React.PropTypes.object.isRequired,
-};
