@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --content-base ./ --env.dev --host 0.0.0.0",
     "build": "webpack --env.prod",
-    "start": "http-server",
+    "start": "http-server -p 8070",
     "setup": "npm install && npm run validate",
     "validate": "npm-run-all build"
   },
