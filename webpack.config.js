@@ -17,8 +17,10 @@ module.exports = env => {
     },
     devtool: ifProd('source-map', 'eval'),
     devServer: {
-      port: 8080,
-      historyApiFallback: true
+      port: 8070,
+      historyApiFallback: {
+        disableDotRule: true
+      }
     },
     module: {
       loaders: [

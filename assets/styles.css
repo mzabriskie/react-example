@@ -14,8 +14,11 @@ h5 {
 	font-weight: 300;
 	font-size: 20px;
 }
+ul {
+	list-style-type: none;
+}
 li {
-	padding: 25px 0;
+	padding: 10px 0;
 }
 section {
 	padding: 20px 0;
@@ -50,4 +53,14 @@ section.orgs img {
 	margin: 5px;
 	width: 42px;
 	height: 42px;
+}
+
+mark, .mark {
+	background-color: #00A69B;
+	color: #FFF;
+	padding: 1px 5px;
+}
+
+p {
+	white-space: pre-line;
 }

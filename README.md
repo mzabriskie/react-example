@@ -1,6 +1,9 @@
-# react-example
+# Elastic_Front
 
-React example app that demonstrates using [React] with [webpack], and [babeljs], as well as project structure.
+Front-end application for Elasticsearch.<br/>
+It's aim to search articles in index "crystal".<br/>
+Uses [React] with [webpack], and [babeljs], as well as project structure.
+
 
 Requirements:
 - git
@@ -10,11 +13,11 @@ Requirements:
 To run the app locally:
 
 ```bash
-git clone https://github.com/mzabriskie/react-example.git
-cd react-example
+git clone https://github.com/JacksonGibsonESP/Elastic_Front.git
+cd Elastic_Front
 npm run setup
 npm run dev
-open http://localhost:8080
+open http://localhost:8070
 ```
 
 [React]: http://facebook.github.io/react/
