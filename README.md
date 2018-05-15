@@ -20,3 +20,16 @@ open http://localhost:8080
 [React]: http://facebook.github.io/react/
 [webpack]: http://webpack.github.io/
 [babeljs]: https://babeljs.io/
+
+
+Skills I have coded:
+● routing
+● input validation
+● makes API call, UI updates with success/failed status of API call
+● dynamic rendering depending on parameters/input data
+● Animations
+● Infinite scroll capability for Home page list of posts
+● Functional UI test
+
+Skills not coded
+● unit test (Not Implemented)
