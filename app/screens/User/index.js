@@ -10,7 +10,7 @@ export default class User extends Component {
   }
 
   handleFilterUpdate = (filter) => {
-    this.setState({filter})
+    this.setState(state => ({ ...state, filter }))
   }
 
   render() {

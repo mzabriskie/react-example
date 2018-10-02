@@ -13,7 +13,7 @@ export default class Profile extends Component {
     const {username} = this.props
     getUserData(username)
       .then(({user, orgs}) => {
-        this.setState({user, orgs});
+        this.setState(state => ({ ...state, user, orgs }));
       });
   }
 
